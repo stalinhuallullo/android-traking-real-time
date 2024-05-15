@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    >
+
+    <!--<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/textViewName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Taylor Swift"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        android:padding="16dp"/>-->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+        <!--<ImageView
+            android:id="@+id/imageViewPhoto"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:src="@drawable/ic_location"
+            android:scaleType="centerCrop"/>-->
+        <TextView
+            android:id="@+id/textViewCount"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:text="100"
+            android:textSize="20sp"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:layout_marginStart="16dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Latitude:"
+                android:textSize="14sp"/>
+            <TextView
+                android:id="@+id/textViewLatitude"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:text="Taylor Swift"
+                android:textSize="18sp"
+                android:layout_marginBottom="5dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Longitude:"
+                android:textSize="14sp"/>
+            <TextView
+                android:id="@+id/textViewLongitude"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:text="Edad"
+                android:layout_marginBottom="5dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Hours:"
+                android:textSize="14sp"/>
+            <TextView
+                android:id="@+id/textViewHours"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:text="Apellido"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginBottom="15dp"
+        android:layout_marginTop="15dp"
+        android:background="#FFFFFF"/>
+</LinearLayout>
