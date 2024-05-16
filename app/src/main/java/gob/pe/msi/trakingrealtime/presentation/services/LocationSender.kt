@@ -5,8 +5,13 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LifecycleRegistry
 import androidx.lifecycle.Observer
+import gob.pe.msi.trakingrealtime.presentation.model.dto.GPSExpresoDto
 import gob.pe.msi.trakingrealtime.presentation.model.dto.LocationDto
 import gob.pe.msi.trakingrealtime.presentation.ui.LocationViewModel
+import android.os.Handler
+import android.os.Looper
+import kotlinx.coroutines.*
+
 
 class LocationSender: LifecycleOwner  {
     private val lifecycleRegistry: LifecycleRegistry = LifecycleRegistry(this)
@@ -17,11 +22,15 @@ class LocationSender: LifecycleOwner  {
     }
 
     fun start() {
-        lifecycleRegistry.currentState = Lifecycle.State.STARTED
+        Handler(Looper.getMainLooper()).post {
+            lifecycleRegistry.currentState = Lifecycle.State.STARTED
+        }
     }
 
     fun stop() {
-        lifecycleRegistry.currentState = Lifecycle.State.DESTROYED
+        Handler(Looper.getMainLooper()).post {
+            lifecycleRegistry.currentState = Lifecycle.State.DESTROYED
+        }
     }
 
     override val lifecycle: Lifecycle
@@ -44,11 +53,26 @@ class LocationSender: LifecycleOwner  {
         val id_user = 1
 
         val newLocation = LocationDto(uuid.toInt(), id_user,lat, lng, hours)
+
+        /*val newLocation = GPSExpresoDto
+            .Builder()
+            .CodLinea("01")
+            .Latitud(lat)
+            .Longitud(lng)
+            .build()*/
         start()
-        locationViewModel.saveLocation(newLocation).observe(this, Observer { result ->
-            Log.d("MainActivity", "Location : Latitude: ${result.latitude} | Longitude: ${result.longitude} | Hora: ${result.registered}")
-            stop()
-        })
+        CoroutineScope(Dispatchers.IO).launch {
+            withContext(Dispatchers.Main) {
+                locationViewModel.saveLocation(newLocation).observe(this@LocationSender) { result ->
+                    //Log.d("MainActivity", "Location : Latitude: ${result.latitude} | Longitude: ${result.longitude} | Hora: ${result.registered}")
+                    Log.d(
+                        "MainActivity",
+                        "Location : CodigoRespuesta: ${result.CodigoRespuesta} | Respuesta: ${result.Respuesta}"
+                    )
+                    stop()
+                }
+            }
+        }
     }
 
     companion object {

@@ -107,6 +107,7 @@ class LocationService: Service() {
                     iteraciones++
                     // Envía la información a la actividad mediante un intent broadcast
 
+                    uuid = "01"
                     GlobalScope.launch{
                         locationSender?.sendLocation(uuid!!, latitude.toString(), longitude.toString(), hours)
                     }
@@ -161,8 +162,8 @@ class LocationService: Service() {
         locationSender = LocationSender.getInstance()
         //uuid = PreferenceManager.getDefaultSharedPreferences(this).getString("uuid", "").toString()
 
-        val sharedPreferences = this.getSharedPreferences("LocationService", Context.MODE_PRIVATE)
-        uuid = sharedPreferences.getString("uuid", "") ?: ""
+        //val sharedPreferences = this.getSharedPreferences("LocationService", Context.MODE_PRIVATE)
+        //uuid = sharedPreferences.getString("uuid", "") ?: ""
 
         fusedLocationProviderClient.requestLocationUpdates(locationRequest, locationCallback, Looper.getMainLooper())
 

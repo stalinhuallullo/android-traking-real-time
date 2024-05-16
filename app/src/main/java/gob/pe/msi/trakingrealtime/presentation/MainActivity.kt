@@ -84,8 +84,10 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, EasyPermissions.
                 val longitude = intent.getStringExtra("longitude")
                 val hours = intent.getStringExtra("hours")
 
-                if(latitude != null && longitude != null && hours != null)
+                if(latitude != null && longitude != null && hours != null){
+                    //recyclerView?.scrollToPosition(adapter.itemCount -1)
                     adapter.addLocation(LocationModel(count, latitude, longitude, hours))
+                }
             }
         }
     }
@@ -145,6 +147,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, EasyPermissions.
 
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(this)
+
     }
 
     /*fun addLocationAdapter (lng: Double, lat: Double, hours: String) {
