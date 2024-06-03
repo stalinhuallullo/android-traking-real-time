@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">TrakingRealTime</string>
+    <string name="email">Correo electrónico</string>
+    <string name="password">Contraseña</string>
+    <string name="forgot_password">¿Has olvidado tu contraseña?</string>
+    <string name="login">Iniciar sesión</string>
+    <string name="new_user">¿Nuevo usuario?</string>
+    <string name="sign_up">Regístrate</string>
 </resources>

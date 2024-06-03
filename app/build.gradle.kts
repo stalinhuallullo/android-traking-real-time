@@ -49,7 +49,7 @@ dependencies {
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
     implementation("com.vmadalin:easypermissions-ktx:1.0.0")
-
+    implementation("de.hdodenhof:circleimageview:3.1.0")         // circle image view
 
     val retrofitVersion = "2.9.0"
 

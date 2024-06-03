@@ -5,6 +5,7 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
+import android.graphics.PorterDuff
 import android.location.LocationManager
 import android.os.Bundle
 import android.view.View
@@ -12,22 +13,23 @@ import android.widget.Button
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.appbar.MaterialToolbar
 import com.vmadalin.easypermissions.EasyPermissions
 import com.vmadalin.easypermissions.dialogs.SettingsDialog
 import gob.pe.msi.trakingrealtime.R
 import gob.pe.msi.trakingrealtime.presentation.adapter.LocationRealTimeAdapter
 import gob.pe.msi.trakingrealtime.presentation.model.LocationModel
 import gob.pe.msi.trakingrealtime.presentation.services.LocationService
+import gob.pe.msi.trakingrealtime.utils.Tools
 
 
 class MainActivity : AppCompatActivity(), View.OnClickListener, EasyPermissions.PermissionCallbacks {
     private val TAG: String = "MAIN ACTIVITY"
 
-    private lateinit var toolbar: MaterialToolbar
+    private lateinit var toolbar: Toolbar
 
     //private lateinit var trackFriend: Button
     private lateinit var trackerBtn: Button
@@ -47,17 +49,17 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, EasyPermissions.
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_main)
-
+        initToolbar()
         if(!hasLocationPermissions()) {
             requestLocationPermission()
         }
 
-        toolbar = findViewById<MaterialToolbar>(R.id.topAppBar)
-        setSupportActionBar(toolbar)
-        supportActionBar?.title = ""
+        //toolbar = findViewById(R.id.topAppBar)
+        //setSupportActionBar(toolbar)
+        //supportActionBar?.title = "MSI TRAKING BUS"
 
         //trackFriend = findViewById<Button>(R.id.trackAFriendBtn)
-        trackerBtn = findViewById<Button>(R.id.trackerBtn)
+        trackerBtn = findViewById(R.id.trackerBtn)
 
 
 
@@ -74,7 +76,17 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, EasyPermissions.
 
     }
 
-
+    private fun initToolbar() {
+        val toolbar = findViewById<View>(R.id.toolbar) as Toolbar
+        toolbar.setNavigationIcon(R.drawable.ic_menu)
+        toolbar.navigationIcon!!
+            .setColorFilter(resources.getColor(R.color.grey_60), PorterDuff.Mode.SRC_ATOP)
+        setSupportActionBar(toolbar)
+        supportActionBar!!.title = ""
+        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+        Tools.setSystemBarColor(this, R.color.grey_5)
+        Tools.setSystemBarLight(this)
+    }
 
     private fun setupBroadcastReceiver() {
         receiver = object : BroadcastReceiver() {
