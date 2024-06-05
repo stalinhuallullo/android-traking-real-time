@@ -1,28 +1,35 @@
 package gob.pe.msi.trakingrealtime.presentation.dashboard
 
-import android.graphics.Color
+import android.content.Intent
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuItem
-import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
-import androidx.appcompat.app.ActionBar
+import android.view.View
+import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
 import gob.pe.msi.trakingrealtime.R
+import gob.pe.msi.trakingrealtime.presentation.routes.RoutesActivity
 import gob.pe.msi.trakingrealtime.utils.Tools
 
-class DashboardActivity : AppCompatActivity() {
-    lateinit var actionBar: ActionBar
+class DashboardActivity : AppCompatActivity(), View.OnClickListener {
+    //lateinit var actionBar: ActionBar
+    lateinit var lytRoutesAvailable: LinearLayout
+    //lateinit var intent: Intent
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         //enableEdgeToEdge()
         setContentView(R.layout.activity_dashboard)
-        initToolbar()
-
+        lytRoutesAvailable = findViewById(R.id.lytRoutesAvailable)
+        // EVENT CLICKS
+        lytRoutesAvailable.setOnClickListener(this)
+        //initToolbar()
+        Tools.setSystemBarColor(this, R.color.grey_5)
+        Tools.setSystemBarLight(this)
 
     }
-    fun initToolbar() {
+
+
+    /*fun initToolbar() {
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
         actionBar = supportActionBar!!
@@ -32,14 +39,14 @@ class DashboardActivity : AppCompatActivity() {
         //Tools.setSystemBarColorInt(this, Color.parseColor("#054D44"))
         Tools.setSystemBarColor(this, R.color.grey_5)
         Tools.setSystemBarLight(this)
-    }
+    }*/
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+    /*override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_dashboard, menu)
         return true
-    }
+    }*/
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+    /*override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == android.R.id.home) {
             finish()
         } else {
@@ -50,5 +57,16 @@ class DashboardActivity : AppCompatActivity() {
             ).show()
         }
         return super.onOptionsItemSelected(item)
+    }*/
+
+    override fun onClick(view: View?) {
+        when(view?.id){
+            R.id.lytRoutesAvailable->{
+                //intent = Intent(this, RoutesActivity::class.java)
+                val intent = Intent(this, RoutesActivity::class.java)
+                //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                startActivity(intent)
+            }
+        }
     }
 }

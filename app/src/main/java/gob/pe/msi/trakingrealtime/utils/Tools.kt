@@ -9,7 +9,6 @@ import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
 import android.content.res.Resources
-import android.graphics.Bitmap
 import android.graphics.Color
 import android.graphics.PorterDuff
 import android.net.Uri
@@ -18,14 +17,10 @@ import android.util.TypedValue
 import android.view.Menu
 import android.view.View
 import android.view.WindowManager
-import android.widget.ImageView
 import android.widget.Toast
 import androidx.annotation.ColorInt
 import androidx.annotation.ColorRes
-import androidx.annotation.DrawableRes
 import androidx.appcompat.widget.Toolbar
-import androidx.core.content.ContextCompat
-import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory
 import androidx.core.widget.NestedScrollView
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.material.bottomappbar.BottomAppBar
@@ -36,14 +31,14 @@ import java.util.Locale
 import kotlin.math.min
 
 object Tools {
-    /*fun setSystemBarColor(act: Activity) {
+    fun setSystemBarColor(act: Activity) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             val window = act.window
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
             window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
-            window.statusBarColor = act.resources.getColor(R.color.colorPrimaryDark, )
+            window.statusBarColor = act.resources.getColor(R.color.black)
         }
-    }*/
+    }
 
     fun setSystemBarColor(act: Activity, @ColorRes color: Int) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {

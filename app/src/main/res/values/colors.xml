@@ -113,7 +113,8 @@
     <color name="green_A200">#69F0AE</color>
     <color name="green_A400">#00E676</color>
     <color name="green_A700">#00C853</color>
-    <color name="green_msi">#5A6F2E</color>
+    <color name="green_msi">#35601C</color>
+    <!--<color name="green_msi">#5A6F2E</color>-->
 
 
     <color name="yellow_50">#FFFDE7</color>
