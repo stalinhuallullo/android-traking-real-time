@@ -4,6 +4,27 @@
     <color name="dark_grey">#FF8F8F8F</color>
     <color name="light_grey">#FFF5F5F5</color>
 
+
+    <!-- EditText  -->
+    <color name="edt_default_text">#2F3A51</color>
+    <color name="edt_default_hint">#9BB4CA</color>
+    <color name="edt_default_line">#CBD9E7</color>
+    <!-- Tag Checkout -->
+    <color name="tag_selected">#1B8F43</color>
+    <color name="tag_unselected">#f0f0f0</color>
+    <color name="tag_text_selected">#fff</color>
+    <color name="tag_text_unselected">#9C9C9C</color>
+
+    <color name="content_fragment">#F3F4F6</color>
+    <color name="primary_blue">#007CFF</color>
+    <color name="divider">#EAECF0</color>
+    <color name="apha_red">#1AFF4949</color>
+    <color name="subtitle_label">#72809D</color>
+
+    <color name="btn_disabled">#EAECF0</color>
+
+
+
     <color name="colorPrimary">#1976D2</color>
     <color name="colorPrimaryDark">#1565C0</color>
     <color name="colorPrimaryLight">#1E88E5</color>

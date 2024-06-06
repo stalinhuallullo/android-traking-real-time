@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="event"
+            type="gob.pe.msi.trakingrealtime.presentation.common.widget.CustomItemBig" />
+    </data>
+
+    <RelativeLayout
+        android:id="@+id/flItem"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="25dp"
+        android:paddingStart="20dp"
+        android:paddingBottom="25dp"
+        android:paddingEnd="20dp">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/clHeader"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left|center"
+            android:clickable="false"
+            android:duplicateParentState="true">
+
+
+            <TextView
+                android:id="@+id/txtHeader"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:clickable="false"
+                android:duplicateParentState="true"
+                android:fontFamily="@font/multi_bold"
+                android:gravity="center|left"
+                android:textColor="@color/edt_default_text"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Comprobante de pago" />
+
+            <TextView
+                android:id="@+id/btnGo"
+                android:layout_width="80dp"
+                android:layout_height="30dp"
+                android:layout_gravity="right|center"
+                android:layout_marginEnd="10dp"
+                android:fontFamily="@font/multi_bold"
+                android:gravity="center|right"
+                android:src="@drawable/ic_baseline_arrow_drop_down_24"
+                android:text="Agregar"
+                android:textColor="@color/primary_blue"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <LinearLayout
+            android:id="@+id/clBody"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/clHeader"
+            android:layout_marginTop="20dp"
+            android:clickable="false"
+            android:duplicateParentState="true"
+            android:visibility="visible">
+            <ImageView
+                android:id="@+id/imgItem"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="15dp"
+                android:clickable="false"
+                android:duplicateParentState="true"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:src="@drawable/product_placeholder" />
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/txtTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:clickable="false"
+                    android:duplicateParentState="true"
+                    android:fontFamily="@font/multi_bold"
+                    android:text="Boleta  xxxxxxx xxxxxxx xxxxxxx xxxxxxx xxxxxxx xxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+                    android:textColor="@color/edt_default_text"
+                    tools:textSize="14sp" />
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/txtTitle"
+                    android:gravity="center|left">
+
+                    <TextView
+                        android:id="@+id/txtSubTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:clickable="false"
+                        android:duplicateParentState="true"
+                        android:fontFamily="@font/multi_regular"
+                        android:textColor="@color/subtitle_label"
+                        android:textSize="13sp"
+                        tools:text="Boleta Simple" />
+                    <TextView
+                        android:id="@+id/txtStatus"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:background="@drawable/shape_alpha_red_corner"
+                        android:fontFamily="@font/multi_bold"
+                        android:paddingStart="10dp"
+                        android:paddingTop="3dp"
+                        android:paddingEnd="10dp"
+                        android:paddingBottom="3dp"
+                        android:text="Sin covertura"
+                        android:textColor="@color/red_A200"
+                        android:textSize="10sp"
+                        android:visibility="gone" />
+                </LinearLayout>
+            </RelativeLayout>
+        </LinearLayout>
+
+    </RelativeLayout>
+</layout>

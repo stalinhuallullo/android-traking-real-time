@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nested_content"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+<androidx.core.widget.NestedScrollView
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#F3F4F8"
@@ -9,7 +15,8 @@
     android:fillViewport="true"
     android:scrollbars="none"
     android:scrollingCache="true"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior">
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".presentation.feature.routes.RoutesActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -93,7 +100,7 @@
             <!--////////////////////////////////////////////////////////////////////////-->
             <!-- INICIO DE RUTAS -->
             <!--////////////////////////////////////////////////////////////////////////-->
-            <androidx.cardview.widget.CardView
+            <!--<androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/spacing_middle"
@@ -132,9 +139,6 @@
                             android:textStyle="bold" />
                     </LinearLayout>
 
-                    <!--<View
-                        android:layout_width="0dp"
-                        android:layout_height="20dp"/>-->
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -148,12 +152,6 @@
                             android:paddingVertical="@dimen/spacing_medium"
                             android:background="@color/green_msi">
 
-                            <!--<ImageView
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:layout_centerInParent="true"
-                                app:tint="@color/green_msi"
-                                app:srcCompat="@drawable/shape_circle" />-->
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -161,13 +159,6 @@
                                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
                                 android:textColor="@color/white"
                                 android:textStyle="bold" />
-                            <!--<ImageView
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:layout_centerInParent="true"
-                                android:layout_margin="5dp"
-                                app:tint="@color/light_blue_400"
-                                app:srcCompat="@drawable/ic_layers" />-->
 
                         </RelativeLayout>
 
@@ -195,15 +186,37 @@
                     </LinearLayout>
                 </LinearLayout>
 
-            </androidx.cardview.widget.CardView>
+            </androidx.cardview.widget.CardView>-->
             <!--////////////////////////////////////////////////////////////////////////-->
             <!-- FIN DE RUTAS -->
             <!--////////////////////////////////////////////////////////////////////////-->
+            <gob.pe.msi.trakingrealtime.presentation.common.widget.CustomItemBig
+                android:id="@+id/ciRoutes"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/spacing_middle"
+                android:layout_marginEnd="@dimen/spacing_middle"
+                android:layout_marginTop="@dimen/spacing_middle"
+                android:background="@drawable/shape_rectangle_corner_white"
+                app:header="Rutas"
+                app:imgItem="@drawable/product_placeholder"
+                app:tagItem="Routes"/>
 
+            <gob.pe.msi.trakingrealtime.presentation.common.widget.CustomItemBig
+                android:id="@+id/ciBuses"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/spacing_middle"
+                android:layout_marginEnd="@dimen/spacing_middle"
+                android:layout_marginTop="@dimen/spacing_middle"
+                android:background="@drawable/shape_rectangle_corner_white"
+                app:header="Buses"
+                app:imgItem="@drawable/product_placeholder"
+                app:tagItem="Buses"/>
             <!--////////////////////////////////////////////////////////////////////////-->
             <!-- INICIO DE BUSES -->
             <!--////////////////////////////////////////////////////////////////////////-->
-            <androidx.cardview.widget.CardView
+            <!--<androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/spacing_middle"
@@ -284,12 +297,41 @@
                     </LinearLayout>
                 </LinearLayout>
 
-            </androidx.cardview.widget.CardView>
+            </androidx.cardview.widget.CardView>-->
             <!--////////////////////////////////////////////////////////////////////////-->
             <!-- FIN DE CAR BUSES -->
             <!--////////////////////////////////////////////////////////////////////////-->
+
+
+
         </LinearLayout>
 
     </LinearLayout>
-
 </androidx.core.widget.NestedScrollView>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/shape_popup_window"
+        android:padding="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+        <TextView
+            android:id="@+id/btn_save"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/selector_button_corner_green"
+            android:enabled="false"
+            android:gravity="center"
+            android:text="Iniciar"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

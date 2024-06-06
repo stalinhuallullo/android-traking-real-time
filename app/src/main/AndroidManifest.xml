@@ -26,13 +26,13 @@
         android:theme="@style/AppTheme"
         tools:targetApi="31">
         <activity
-            android:name=".presentation.routes.RoutesActivity"
+            android:name=".presentation.feature.routes.RoutesActivity"
             android:exported="false" />
         <activity
-            android:name=".presentation.dashboard.DashboardActivity"
+            android:name=".presentation.feature.dashboard.DashboardActivity"
             android:exported="false" />
         <activity
-            android:name=".presentation.auth.login.LoginActivity"
+            android:name=".presentation.feature.auth.login.LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -41,10 +41,10 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".SplashScreen"
+            android:name=".presentation.feature.splash.SplashScreen"
             android:exported="false" />
         <activity
-            android:name=".presentation.MainActivity"
+            android:name=".presentation.feature.traking.TrakingActivity"
             android:exported="false">
             <intent-filter>
                 <action android:name="gob.pe.msi.trakingrealtime.ADD_ITEM" />
@@ -52,7 +52,7 @@
         </activity>
 
         <service
-            android:name=".presentation.services.LocationService"
+            android:name=".presentation.feature.traking.services.LocationService"
             android:foregroundServiceType="location" />
     </application>
 
