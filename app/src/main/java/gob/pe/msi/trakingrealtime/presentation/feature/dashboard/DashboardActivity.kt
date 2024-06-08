@@ -6,7 +6,7 @@ import android.view.View
 import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
 import gob.pe.msi.trakingrealtime.R
-import gob.pe.msi.trakingrealtime.presentation.feature.routes.RoutesActivity
+import gob.pe.msi.trakingrealtime.presentation.feature.routes.register.RoutesActivity
 import gob.pe.msi.trakingrealtime.utils.Tools
 
 class DashboardActivity : AppCompatActivity(), View.OnClickListener {

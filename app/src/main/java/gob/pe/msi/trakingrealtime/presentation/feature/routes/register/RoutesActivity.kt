@@ -1,5 +1,6 @@
-package gob.pe.msi.trakingrealtime.presentation.feature.routes
+package gob.pe.msi.trakingrealtime.presentation.feature.routes.register
 
+import android.content.Context
 import android.graphics.PorterDuff
 import android.os.Bundle
 import android.view.Menu
@@ -7,7 +8,6 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.AppCompatButton
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import gob.pe.msi.trakingrealtime.R
@@ -19,6 +19,7 @@ class RoutesActivity : AppCompatActivity(), View.OnClickListener, CustomItemBig.
 
     lateinit var ciRoutes: CustomItemBig
     lateinit var ciBuses: CustomItemBig
+    lateinit var listener: RoutesListener
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,6 +54,14 @@ class RoutesActivity : AppCompatActivity(), View.OnClickListener, CustomItemBig.
     fun initItems() {
         ciRoutes.setOnclickItem(this)
         ciBuses.setOnclickItem(this)
+    }
+
+    override fun attachBaseContext(context: Context?) {
+        super.attachBaseContext(context)
+        println("====================== attachBaseContext ====================")
+        if (context is RoutesListener) {
+            this.listener = context
+        }
     }
 
 
@@ -102,15 +111,33 @@ class RoutesActivity : AppCompatActivity(), View.OnClickListener, CustomItemBig.
         ciBuses.setSubTitle("Toyota -> 2024")
     }
 
+    fun validateRoutesAvailable() {
+        /*val paymentsAvailable: MutableList<PaymentMethod> = ArrayList()
+        paymentsRecurrency.forEach { t ->
+            paymentsCurrent.forEach { c ->
+                if (t.id == c.id) {
+                    paymentsAvailable.add(c)
+                }
+            }
+        }*/
+        //listener.goToRoutes(paymentsAvailable)
+        listener.goToRoutes()
+    }
+
     override fun testClick(tag: String?) {
         when (tag) {
             ciRoutes.tag -> {
+                validateRoutesAvailable()
                 currentRoutes()
             }
             ciBuses.tag -> {
                 currentBuses()
             }
         }
+    }
+    interface RoutesListener {
+        //fun goToRoutes(payments: List<PaymentMethod>)
+        fun goToRoutes()
     }
 
 }

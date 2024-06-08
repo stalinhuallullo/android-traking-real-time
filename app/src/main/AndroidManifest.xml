@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools" >
     <!-- Proporciona acceso a una ubicación precisa mediante GPS. -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" /> <!-- ofrece una ubicación más generalizada basada en fuentes de red como Wi-Fi y torres de telefonía móvil -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
@@ -24,16 +24,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="false"
         android:theme="@style/AppTheme"
-        tools:targetApi="31">
+        tools:targetApi="31" >
         <activity
-            android:name=".presentation.feature.routes.RoutesActivity"
-            android:exported="false" />
-        <activity
-            android:name=".presentation.feature.dashboard.DashboardActivity"
-            android:exported="false" />
-        <activity
-            android:name=".presentation.feature.auth.login.LoginActivity"
-            android:exported="true">
+            android:name=".presentation.feature.routes.routerList.RoutesListActivity"
+            android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -41,14 +35,23 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".presentation.feature.routes.register.RoutesActivity"
+            android:exported="false" />
+        <activity
+            android:name=".presentation.feature.dashboard.DashboardActivity"
+            android:exported="false" />
+        <activity
+            android:name=".presentation.feature.auth.login.LoginActivity"
+            android:exported="false" >
+
+        </activity>
+        <activity
             android:name=".presentation.feature.splash.SplashScreen"
             android:exported="false" />
         <activity
             android:name=".presentation.feature.traking.TrakingActivity"
-            android:exported="false">
-            <intent-filter>
-                <action android:name="gob.pe.msi.trakingrealtime.ADD_ITEM" />
-            </intent-filter>
+            android:exported="false" >
+
         </activity>
 
         <service

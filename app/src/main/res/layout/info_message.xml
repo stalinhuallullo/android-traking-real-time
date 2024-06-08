@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="10dp"
+    android:background="@drawable/shape_alpha_blue_corner"
+    android:layout_margin="16dp">
+
+    <ImageView
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_gravity="center_vertical"
+        android:src="@drawable/ic_alert_ligth_blue" />
+
+    <TextView
+        android:id="@+id/tvInfoMessage"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_marginStart="8dp"
+        android:text="Te mostramos solo las boticas que cuentan con este y el producto que ya tienes en el carrito."
+        android:textColor="@color/black"
+        android:textSize="14sp"/>
+</LinearLayout>
