@@ -20,7 +20,7 @@ import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationResult
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.location.Priority
-import gob.pe.msi.trakingrealtime.presentation.feature.traking.TrakingActivity
+import gob.pe.msi.trakingrealtime.presentation.feature.traking.TrackingActivity
 import gob.pe.msi.trakingrealtime.R
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -138,7 +138,7 @@ class LocationService: Service() {
 
 
 
-        val notificationIntent = Intent(this, TrakingActivity::class.java)
+        val notificationIntent = Intent(this, TrackingActivity::class.java)
         val pendingIntent = PendingIntent.getActivity(
             this,
             0, notificationIntent, PendingIntent.FLAG_IMMUTABLE

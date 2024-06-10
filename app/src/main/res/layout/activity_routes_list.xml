@@ -43,7 +43,7 @@
                 android:layout_marginEnd="@dimen/spacing_mlarge"
                 android:layout_marginTop="@dimen/spacing_mlarge"
                 android:layout_marginBottom="@dimen/spacing_large"
-                android:text="Boticas sugeridas"
+                android:text="Rutas sugeridas"
                 android:textColor="@color/subtitle_label"
                 android:textSize="16sp" />
 
@@ -87,7 +87,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:layout_marginStart="8dp"
-                android:text="Te mostramos solo las boticas que cuentan con este y el producto que ya tienes en el carrito."
+                android:text="Te mostramos solo las rutas que estan disponibles actualmente."
                 android:textColor="#888888"
                 android:textSize="14sp"/>
 
@@ -101,7 +101,8 @@
             android:background="@drawable/selector_button_corner_green"
             android:enabled="false"
             android:gravity="center"
-            android:text="Iniciar"
+            android:clickable="true"
+            android:text="Guardar"
             android:textAllCaps="false"
             android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"

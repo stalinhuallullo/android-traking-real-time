@@ -51,6 +51,7 @@
                 android:fontFamily="@font/multi_bold"
                 android:gravity="center|right"
                 android:src="@drawable/ic_baseline_arrow_drop_down_24"
+                android:clickable="true"
                 android:text="Agregar"
                 android:textColor="@color/primary_blue"
                 android:textSize="14sp"

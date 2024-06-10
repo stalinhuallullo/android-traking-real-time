@@ -53,6 +53,8 @@ dependencies {
     implementation("de.hdodenhof:circleimageview:3.1.0")         // circle image view
     implementation("com.mikhaellopez:circularimageview:4.3.1")
     implementation("com.balysv:material-ripple:1.0.2")
+    implementation("io.reactivex.rxjava3:rxjava:3.1.5")
+    implementation("io.reactivex.rxjava3:rxandroid:3.0.2")
 
     val retrofitVersion = "2.9.0"
 
@@ -66,6 +68,8 @@ dependencies {
     }
     implementation(retrofitDependency)
     implementation(gsonDependency)
+
+
 
     implementation("com.google.android.material:material:1.6.1")
     implementation("com.google.android.gms:play-services:7.0.0")

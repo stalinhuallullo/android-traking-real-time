@@ -34,7 +34,7 @@
             android:layout_height="wrap_content"
             app:elevation="0dp"
             android:translationZ="0.1dp">
-            <include layout="@layout/toolbar_green_text_back" />
+            <include layout="@layout/toolbar_simple" />
         </com.google.android.material.appbar.AppBarLayout>
         <!--////////////////////////////////////////////////////////////////////////-->
         <!-- INICIO Toolbar -->
@@ -285,13 +285,14 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
         <TextView
-            android:id="@+id/btn_save"
+            android:id="@+id/btnSave"
             android:layout_width="match_parent"
             android:layout_height="45dp"
             android:layout_marginTop="15dp"
             android:background="@drawable/selector_button_corner_green"
             android:enabled="false"
             android:gravity="center"
+            android:clickable="true"
             android:text="Iniciar"
             android:textAllCaps="false"
             android:textColor="@color/white"

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/itemView"
+    android:layout_width="match_parent"
+    android:layout_height="80dp"
+    android:layout_marginTop="10dp"
+    android:layout_marginBottom="10dp"
+    android:background="@drawable/shape_rectangle_corner_white"
+    android:gravity="center|left"
+    android:orientation="horizontal"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp">
+
+    <ImageView
+        android:id="@+id/imgBus"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:background="@drawable/ic_bus"
+        android:clickable="false"
+        android:duplicateParentState="true" />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:clickable="false"
+        android:duplicateParentState="true"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp">
+
+        <TextView
+            android:id="@+id/txtPlate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:clickable="false"
+            android:duplicateParentState="true"
+            android:textStyle="bold"
+            android:textColor="@color/text_color_detail"
+            android:textSize="16sp"
+            tools:text="XYZ-123" />
+
+        <TextView
+            android:id="@+id/txtBrand"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="5dp"
+            android:clickable="false"
+            android:duplicateParentState="true"
+            android:fontFamily="@font/rb_regular"
+            android:textColor="@color/text_color_detail"
+            android:textSize="14sp"
+            android:visibility="visible"
+            tools:text="Toyota" />
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/imgViewCheck"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginLeft="10dp"
+        android:clickable="false"
+        android:layout_alignParentEnd="true"
+        android:layout_gravity="center"
+        android:layout_centerVertical="true"
+        android:src="@drawable/selector_checkbox_only" />
+</LinearLayout>

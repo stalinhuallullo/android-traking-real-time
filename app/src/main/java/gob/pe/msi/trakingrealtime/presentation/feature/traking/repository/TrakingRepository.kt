@@ -6,14 +6,14 @@ import androidx.lifecycle.MutableLiveData
 import gob.pe.msi.trakingrealtime.presentation.feature.traking.model.dto.GPSExpresoDto
 import gob.pe.msi.trakingrealtime.presentation.feature.traking.model.dto.GPSExpresoResponseDto
 import gob.pe.msi.trakingrealtime.presentation.feature.traking.model.dto.LocationDto
-import gob.pe.msi.trakingrealtime.data.net.ApiClient
-import gob.pe.msi.trakingrealtime.data.net.service.ApiService
+import gob.pe.msi.trakingrealtime.data.net.RestApi
+import gob.pe.msi.trakingrealtime.data.net.service.ITrackingService
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 class TrakingRepository {
-    private val apiService: ApiService = ApiClient.retrofitInstance!!.create(ApiService::class.java)
+    private val apiService: ITrackingService = RestApi.retrofitInstance!!.create(ITrackingService::class.java)
 
 
     fun saveLocation (headers: Map<String, String>, location: LocationDto): LiveData<GPSExpresoResponseDto> {

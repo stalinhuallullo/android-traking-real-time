@@ -26,7 +26,7 @@ import gob.pe.msi.trakingrealtime.presentation.feature.traking.services.Location
 import gob.pe.msi.trakingrealtime.utils.Tools
 
 
-class TrakingActivity : AppCompatActivity(), View.OnClickListener, EasyPermissions.PermissionCallbacks {
+class TrackingActivity : AppCompatActivity(), View.OnClickListener, EasyPermissions.PermissionCallbacks {
     private val TAG: String = "MAIN ACTIVITY"
 
     private lateinit var toolbar: Toolbar
@@ -184,7 +184,7 @@ class TrakingActivity : AppCompatActivity(), View.OnClickListener, EasyPermissio
 
     override fun onPermissionsDenied(requestCode: Int, perms: List<String>) {
         if(EasyPermissions.somePermissionDenied(this, perms.first())) {
-            SettingsDialog.Builder(this@TrakingActivity).build().show()
+            SettingsDialog.Builder(this@TrackingActivity).build().show()
         } else {
             requestLocationPermission()
         }
@@ -205,20 +205,20 @@ class TrakingActivity : AppCompatActivity(), View.OnClickListener, EasyPermissio
 
     override fun onResume() {
         super.onResume()
-        LocalBroadcastManager.getInstance(this@TrakingActivity).registerReceiver(receiver, IntentFilter("gob.pe.msi.trakingrealtime.ADD_ITEM"))
+        LocalBroadcastManager.getInstance(this@TrackingActivity).registerReceiver(receiver, IntentFilter("gob.pe.msi.trakingrealtime.ADD_ITEM"))
     }
 
 
     override fun onDestroy() {
         super.onDestroy()
-        LocalBroadcastManager.getInstance(this@TrakingActivity).unregisterReceiver(receiver)
+        LocalBroadcastManager.getInstance(this@TrackingActivity).unregisterReceiver(receiver)
 
         Toast.makeText(this, "== Apagando por cerrar app ==", Toast.LENGTH_SHORT).show()
         LocationService.stopService(this)
     }
     override fun onPause() {
         super.onPause()
-        LocalBroadcastManager.getInstance(this@TrakingActivity).unregisterReceiver(receiver)
+        LocalBroadcastManager.getInstance(this@TrackingActivity).unregisterReceiver(receiver)
 
     }
 }

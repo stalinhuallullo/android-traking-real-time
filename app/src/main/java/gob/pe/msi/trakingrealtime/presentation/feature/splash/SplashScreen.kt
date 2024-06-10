@@ -9,7 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import gob.pe.msi.trakingrealtime.R
-import gob.pe.msi.trakingrealtime.presentation.feature.traking.TrakingActivity
+import gob.pe.msi.trakingrealtime.presentation.feature.traking.TrackingActivity
 import java.util.UUID
 
 
@@ -40,7 +40,7 @@ class SplashScreen : AppCompatActivity() {
             sharedPreferences.edit().putString("uuid", UUID.randomUUID().toString()).apply()
         }
 
-        val intent = Intent(this, TrakingActivity::class.java)
+        val intent = Intent(this, TrackingActivity::class.java)
         startActivity(intent)
         finish()
     }

@@ -2,14 +2,13 @@ package gob.pe.msi.trakingrealtime.data.net.service
 
 import gob.pe.msi.trakingrealtime.presentation.feature.traking.model.dto.GPSExpresoDto
 import gob.pe.msi.trakingrealtime.presentation.feature.traking.model.dto.GPSExpresoResponseDto
-import gob.pe.msi.trakingrealtime.presentation.feature.traking.model.dto.LocationDto
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.HeaderMap
 import retrofit2.http.POST
 
 
-interface ApiService {
+interface ITrackingService {
     //@GET("users")
     //Call<List<User>> getUsers();
 

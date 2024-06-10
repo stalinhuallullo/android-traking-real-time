@@ -7,35 +7,11 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import gob.pe.msi.trakingrealtime.R
-import gob.pe.msi.trakingrealtime.domain.RoutePresentation
+import gob.pe.msi.trakingrealtime.presentation.feature.routes.routerList.model.Route
 
-class RouteAdapter() : RecyclerView.Adapter<RouteAdapter.RouteViewHolder>() {
-/*
-    //private lateinit var routes: List<RoutePresentation>
-    private lateinit var listener: RouteListener
+class RouteAdapter(private val routes: List<Route>, private val selectedRoute: Route?, private val listener: RouteListener) : RecyclerView.Adapter<RouteAdapter.RouteViewHolder>() {
 
-    private lateinit var routePresentations: List<RoutePresentation>
-    private var isFirstTime = true
-    //private var currentPresentationIdSelected = -1
-    private var currentPresentationIdSelected = ""*/
-private lateinit var listener: RouteListener
-    private var routePresentations: List<RoutePresentation> = listOf()
-    private var currentPresentationIdSelected: String? = null
-
-    constructor(routes: List<RoutePresentation>, listener: RouteListener) : this() {
-        //this.routePresentations = routes
-        //this.listener = listener
-
-        this.routePresentations = routes
-        this.listener = listener
-        if (routes.isNotEmpty()) {
-            currentPresentationIdSelected = routes[0].route
-            listener.updateProduct(routes[0], 0)
-        }
-
-    }
-
-
+    private var currentSelected: String? = selectedRoute?.route
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RouteViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.viewholder_list_route_2, parent, false)
@@ -43,101 +19,35 @@ private lateinit var listener: RouteListener
     }
 
     override fun onBindViewHolder(holder: RouteViewHolder, position: Int) {
-        println("==================== YA INICIO ====================")
-        val routePresentation = routePresentations[position]
-
-        holder.routeName.text = routePresentation.routeName
-        holder.route.text = routePresentation.route
-        holder.direction.text = routePresentation.direction
-
-        holder.imgViewCheck.isSelected = routePresentation.presentationSelected == true
-        holder.updateRouteStyle(routePresentation.presentationSelected == true)
+        val route = routes[position]
+        holder.routeName.text = route.routeName
+        holder.route.text = route.route
+        holder.direction.text = route.direction
+        holder.imgViewCheck.isSelected = route.route == currentSelected
+        holder.updateRouteStyle(route.selected)
 
         holder.itemView.setOnClickListener {
-            val previousPosition = currentPresentationIdSelected?.let { id ->
-                routePresentations.indexOfFirst { it.route == id }
+            val previousPosition = currentSelected?.let { unit ->
+                routes.indexOfFirst { it.route == unit }
             } ?: -1
 
-            currentPresentationIdSelected = routePresentation.route
+            currentSelected = route.route
             updateSelection(previousPosition, position)
-            listener.updateProduct(routePresentation, position)
+            listener.updateProduct(route, position)
         }
-
-        /*val routePresentationList: RoutePresentation = routePresentations[holder.adapterPosition]
-
-        if (isFirstTime) {
-            routePresentationList.presentationSelected = true
-            isFirstTime = false
-
-            if (currentPresentationIdSelected.isNotEmpty()) {
-                routePresentationList.presentationSelected = false
-                if ((routePresentationList.route === currentPresentationIdSelected)) {
-                    routePresentationList.presentationSelected = true
-                }
-            }
-            println("==================== Primer inicio ====================")
-            listener.updateProduct(routePresentationList, position)
-        } else {
-            if (currentPresentationIdSelected.isNotEmpty() && (routePresentationList.route === currentPresentationIdSelected)) {
-                routePresentationList.presentationSelected = true
-
-                listener.updateProduct(routePresentationList, position)
-            } else {
-                routePresentationList.presentationSelected = false
-            }
-            println("==================== YA INICIO ====================")
-        }
-
-        holder.itemView.setOnClickListener{
-            currentPresentationIdSelected = routePresentationList.route!!
-            for (pp in routePresentations) {
-                pp.presentationSelected = false
-            }
-
-            routePresentationList.presentationSelected = true
-
-            if (listener != null) {
-                listener.updateProduct(routePresentationList, position)
-            }
-            println("==================== CLICK ====================")
-//            notifyDataSetChanged()
-            notifyItemChanged(currentPresentationIdSelected)
-        }
-
-        holder.routeName.text = routePresentationList.routeName
-        holder.route.text = routePresentationList.route
-        holder.direction.text = routePresentationList.direction
-
-        holder.imgViewCheck.isSelected = routePresentationList.presentationSelected!!
-*/
-        /*val pharmacy = routes[position]
-        holder.routeName.text = pharmacy.routeName
-        holder.route.text = pharmacy.route
-        holder.direction.text = pharmacy.direction
-        //holder.imgViewCheck.isSelected = false
-
-        holder.itemView.isActivated = selectedItemPosition == position
-        holder.itemView.setOnClickListener {
-            selectedItemPosition = holder.adapterPosition
-            //listener.onPharmacyClick(pharmacy)
-            holder.imgViewCheck.isSelected = true
-            notifyItemChanged(selectedItemPosition)
-        }*/
-
-
     }
 
     private fun updateSelection(previousPosition: Int, newPosition: Int) {
         if (previousPosition != -1) {
-            routePresentations[previousPosition].presentationSelected = false
+            routes[previousPosition].selected = false
             notifyItemChanged(previousPosition)
         }
-        routePresentations[newPosition].presentationSelected = true
+        routes[newPosition].selected = true
         notifyItemChanged(newPosition)
     }
 
     override fun getItemCount(): Int {
-        return routePresentations.size
+        return routes.size
     }
 
 
@@ -150,19 +60,19 @@ private lateinit var listener: RouteListener
 
         fun updateRouteStyle(isSelected: Boolean) {
             if (isSelected) {
-                route.setBackgroundResource(R.drawable.bg_tag_active_blue)  // Cambiar a un drawable seleccionado
-                route.setTextColor(itemView.context.resources.getColor(R.color.white))  // Cambiar color de texto seleccionado
-                route.setCompoundDrawablesRelativeWithIntrinsicBounds(0,0, R.drawable.map_arrow_down_white, 0)  // Cambiar color de texto seleccionado
+                route.setBackgroundResource(R.drawable.bg_tag_active_blue)
+                route.setTextColor(itemView.context.resources.getColor(R.color.white))
+                route.setCompoundDrawablesRelativeWithIntrinsicBounds(0,0, R.drawable.map_arrow_down_white, 0)
             } else {
-                route.setBackgroundResource(R.drawable.shape_marketplace)  // Cambiar a un drawable no seleccionado
-                route.setTextColor(itemView.context.resources.getColor(R.color.subtitle_label))  // Cambiar color de texto no seleccionado
-                route.setCompoundDrawablesRelativeWithIntrinsicBounds(0,0, R.drawable.map_arrow_down_grey, 0)  // Cambiar color de texto seleccionado
+                route.setBackgroundResource(R.drawable.shape_marketplace)
+                route.setTextColor(itemView.context.resources.getColor(R.color.subtitle_label))
+                route.setCompoundDrawablesRelativeWithIntrinsicBounds(0,0, R.drawable.map_arrow_down_grey, 0)
             }
         }
     }
 
     interface RouteListener {
-        fun updateProduct(presentation: RoutePresentation, position: Int)
+        fun updateProduct(presentation: Route, position: Int)
     }
 
 }
