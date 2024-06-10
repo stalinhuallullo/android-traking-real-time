@@ -56,6 +56,7 @@ dependencies {
     implementation("io.reactivex.rxjava3:rxjava:3.1.5")
     implementation("io.reactivex.rxjava3:rxandroid:3.0.2")
 
+
     val retrofitVersion = "2.9.0"
 
     val retrofitDependency = when (retrofitVersion) {
@@ -66,8 +67,13 @@ dependencies {
         "2.9.0" -> "com.squareup.retrofit2:converter-gson:$retrofitVersion"
         else -> "com.squareup.retrofit2:converter-gson:$retrofitVersion" // Puedes agregar más casos si es necesario
     }
+    val retrofitAdapter = when (retrofitVersion) {
+        "2.9.0" -> "com.squareup.retrofit2:adapter-rxjava3:$retrofitVersion"
+        else -> "com.squareup.retrofit2:adapter-rxjava3:$retrofitVersion" // Puedes agregar más casos si es necesario
+    }
     implementation(retrofitDependency)
     implementation(gsonDependency)
+    implementation(retrofitAdapter)
 
 
 

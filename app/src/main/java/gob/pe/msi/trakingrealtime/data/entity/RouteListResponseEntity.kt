@@ -1,15 +1,35 @@
 package gob.pe.msi.trakingrealtime.data.entity
 
+import android.os.Parcel
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 
-class RouteListResponseEntity {
+data class RouteListResponseEntity(
+    val CODLINEA: String,
+    val TXTLINEA: String,
+    val TXTRGBBUS: String
+) : Parcelable {
+    constructor(parcel: Parcel) : this(
+        parcel.readString() ?: "",
+        parcel.readString() ?: "",
+        parcel.readString() ?: ""
+    )
 
-    @SerializedName("CODLINEA")
-    var codLinea: String? = null
+    override fun writeToParcel(parcel: Parcel, flags: Int) {
+        parcel.writeString(CODLINEA)
+        parcel.writeString(TXTLINEA)
+        parcel.writeString(TXTRGBBUS)
+    }
 
-    @SerializedName("TXTLINEA")
-    var txtLinea: String? = null
+    override fun describeContents(): Int = 0
 
-    @SerializedName("TXTRGBBUS")
-    var txtRgbBus: String? = null
+    companion object CREATOR : Parcelable.Creator<RouteListResponseEntity> {
+        override fun createFromParcel(parcel: Parcel): RouteListResponseEntity {
+            return RouteListResponseEntity(parcel)
+        }
+
+        override fun newArray(size: Int): Array<RouteListResponseEntity?> {
+            return arrayOfNulls(size)
+        }
+    }
 }

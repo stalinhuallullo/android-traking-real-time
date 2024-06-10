@@ -14,6 +14,9 @@ import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import gob.pe.msi.trakingrealtime.R
+import gob.pe.msi.trakingrealtime.data.entity.RouteListResponseEntity
+import gob.pe.msi.trakingrealtime.data.model.HttpResponse
+import gob.pe.msi.trakingrealtime.data.model.HttpResponseRoutes
 import gob.pe.msi.trakingrealtime.presentation.common.utils.OnSingleClickListener
 import gob.pe.msi.trakingrealtime.presentation.feature.routes.routerList.adapter.RouteAdapter
 import gob.pe.msi.trakingrealtime.presentation.feature.routes.routerList.model.Route
@@ -25,6 +28,7 @@ class RoutesListActivity : AppCompatActivity(), RouteAdapter.RouteListener {
 
     private lateinit var recyclerView: RecyclerView
     private var selected: Route? = null
+    private var routesHttp: HttpResponseRoutes? = null
     private lateinit var  adapter: RouteAdapter
     private lateinit var toolbar: Toolbar
     private lateinit var btnSave: TextView
@@ -34,16 +38,26 @@ class RoutesListActivity : AppCompatActivity(), RouteAdapter.RouteListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_routes_list)
 
-        selected = if (Build.VERSION.SDK_INT >= 33) {
-            intent.getParcelableExtra(Constants.ROUTE_RESPONSE_KEY, Route::class.java)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            selected = intent.getParcelableExtra(Constants.ROUTE_RESPONSE_KEY, Route::class.java)
+            //routesHttp = intent.getParcelableExtra(Constants.EXTRA_ROUTE_METHOD, HttpResponse::class.java)
         } else {
-            intent.getParcelableExtra(Constants.ROUTE_RESPONSE_KEY)
+            selected = intent.getParcelableExtra(Constants.ROUTE_RESPONSE_KEY)
         }
+
+        @Suppress("DEPRECATION")
+        routesHttp = intent.getParcelableExtra(Constants.EXTRA_ROUTE_METHOD)
 
         initToolbar()
         initComponents()
         initRVPresentations()
         initClickListener()
+    }
+
+    private fun displayRoutes(routes: HttpResponse<List<RouteListResponseEntity>>) {
+        // Tu lógica para mostrar la lista de rutas
+        // Por ejemplo, puedes usar un RecyclerView para mostrar los datos
+
     }
 
     private fun initToolbar() {
@@ -65,6 +79,8 @@ class RoutesListActivity : AppCompatActivity(), RouteAdapter.RouteListener {
 
     fun initComponents() {
         btnSave = findViewById(R.id.btnSave)
+
+
     }
 
     fun initClickListener(){
@@ -85,7 +101,7 @@ class RoutesListActivity : AppCompatActivity(), RouteAdapter.RouteListener {
     fun initRVPresentations() {
         recyclerView = findViewById(R.id.recyclerView)
         recyclerView.itemAnimator = null
-        val routes = listOf(
+        /*val routes = listOf(
             Route("PERIFERICA", "RUTA 1", "Av. La Fontana Nro. 466 Int. 1032 Urb. San Cesar Ii Etapa"),
             Route("NORTE CENTRO FINANCIERO", "RUTA 2", "Av. La Molina Nro. 820 Int. 1 Urb. Ampliacion Residencial Monterrico"),
             Route("SUR CENTRO FINANCIERO", "RUTA 3", "Av. Flora Tristan 691 Mz. O Lt. 3 Esq. Calle Piura N° 106-108 Tda. 1,2,3 Urb. Santa Patricia"),
@@ -97,8 +113,18 @@ class RoutesListActivity : AppCompatActivity(), RouteAdapter.RouteListener {
             Route("PERIFERICA", "RUTA 7", "Av. La Fontana Nro. 466 Int. 1032 Urb. San Cesar Ii Etapa"),
             Route("NORTE CENTRO FINANCIERO", "RUTA 8", "Av. La Molina Nro. 820 Int. 1 Urb. Ampliacion Residencial Monterrico"),
             Route("SUR CENTRO FINANCIERO", "RUTA 9", "Av. Flora Tristan 691 Mz. O Lt. 3 Esq. Calle Piura N° 106-108 Tda. 1,2,3 Urb. Santa Patricia")
-        )
+        )*/
 
+        println("fffffffffffffffffffff ==>  $routesHttp")
+        println("${routesHttp!!::class.simpleName}")
+
+
+        var routes: List<Route> =  routesHttp!!.Datos?.map { Route(it.CODLINEA, it.TXTLINEA, it.TXTRGBBUS) }!!
+
+        /*val routes: List<Route> = routesHttp!!.map { it: RouteListResponseEntity ->
+            Route(it.CODLINEA, it.TXTLINEA, it.TXTRGBBUS)
+        }*/
+        //println(" routes fffffffffffffffffffff ==>  ${routes}")
 
         adapter = RouteAdapter(routes, selected,this)
         recyclerView.layoutManager = LinearLayoutManager(this)

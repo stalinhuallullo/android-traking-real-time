@@ -7,6 +7,7 @@ import android.graphics.PorterDuff
 import android.graphics.PorterDuffColorFilter
 import android.os.Build
 import android.os.Bundle
+import android.os.Parcelable
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -17,7 +18,13 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import gob.pe.msi.trakingrealtime.R
+import gob.pe.msi.trakingrealtime.data.entity.RouteListResponseEntity
+import gob.pe.msi.trakingrealtime.data.model.HttpResponse
+import gob.pe.msi.trakingrealtime.data.model.HttpResponseRoutes
+import gob.pe.msi.trakingrealtime.data.net.viewmodel.RoutesViewModel
 import gob.pe.msi.trakingrealtime.presentation.common.utils.OnSingleClickListener
 import gob.pe.msi.trakingrealtime.presentation.common.widget.CustomItemBig
 import gob.pe.msi.trakingrealtime.presentation.feature.routes.buses.BusesListActivity
@@ -28,6 +35,7 @@ import gob.pe.msi.trakingrealtime.presentation.feature.routes.utils.UtilsRoutes
 import gob.pe.msi.trakingrealtime.presentation.feature.traking.TrackingActivity
 import gob.pe.msi.trakingrealtime.utils.Constants
 import gob.pe.msi.trakingrealtime.utils.Tools
+import java.io.Serializable
 
 
 class RoutesActivity : AppCompatActivity(), View.OnClickListener, CustomItemBig.ItemListener {
@@ -41,6 +49,9 @@ class RoutesActivity : AppCompatActivity(), View.OnClickListener, CustomItemBig.
     var selectedBus: Bus? = null
     private lateinit var startForResultRoutes : ActivityResultLauncher<Intent>
     private lateinit var startForResultBuses : ActivityResultLauncher<Intent>
+
+    private lateinit var viewModel: RoutesViewModel
+    private var routesHttp: HttpResponseRoutes? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -81,6 +92,24 @@ class RoutesActivity : AppCompatActivity(), View.OnClickListener, CustomItemBig.
 
         ciRoutes.listener = this
         ciBuses.listener = this
+
+        viewModel = ViewModelProvider(this)[RoutesViewModel::class.java]
+
+        viewModel.routesLiveData.observe(this) { response ->
+            response?.let {
+                if (it.CodigoRespuesta == "01" && it.Respuesta == "Exito") {
+                    routesHttp = it
+                    //routesHttp = it.datosList
+                } else {
+                    // Error, handle the error message
+                    Toast.makeText(this, "ERROR ===> ${it.Respuesta}", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+
+        // Call your API
+        viewModel.fetchRoutes(mapOf("Authorization" to "Bearer token"))
+
     }
 
     fun initClickListener(){
@@ -198,10 +227,25 @@ class RoutesActivity : AppCompatActivity(), View.OnClickListener, CustomItemBig.
             }
         }*/
 
+        /*val paymentsAvailable: MutableList<PaymentMethod> = ArrayList()
+        paymentsRecurrency.forEach { t ->
+            paymentsCurrent.forEach { c ->
+                if (t.id == c.id) {
+                    paymentsAvailable.add(c)
+                }
+            }
+        }*/
+
+        println("routesHttp ==== > ${routesHttp}")
         val intent = Intent(applicationContext, RoutesListActivity::class.java)
         selectedRoute?.let {
             intent.putExtra(Constants.ROUTE_RESPONSE_KEY, it)
         }
+        routesHttp?.let {
+            intent.putExtra(Constants.EXTRA_ROUTE_METHOD, it)
+            //intent.putParcelableArrayListExtra(Constants.EXTRA_ROUTE_METHOD, ArrayList(it))
+        }
+
         startForResultRoutes.launch(intent)
         //listener.goToRoutes()
     }

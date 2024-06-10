@@ -12,4 +12,7 @@ object Constants {
 
     const val REGISTER_TO_TRACKING_BUS: String = "tracking_bus"
     const val BUSES_DATA: String = "BUSES_DATA"
+
+
+    const val EXTRA_ROUTE_METHOD: String = "EXTRA_ROUTE_METHOD"
 }
