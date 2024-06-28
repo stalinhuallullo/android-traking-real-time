@@ -15,4 +15,5 @@ object Constants {
 
 
     const val EXTRA_ROUTE_METHOD: String = "EXTRA_ROUTE_METHOD"
+    const val EXTRA_BUS_METHOD: String = "EXTRA_BUS_METHOD"
 }

@@ -1,10 +1,13 @@
 package gob.pe.msi.trakingrealtime.presentation.feature.routes.routerList.adapter
 
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.RelativeLayout
 import android.widget.TextView
+import androidx.core.graphics.toColorInt
 import androidx.recyclerview.widget.RecyclerView
 import gob.pe.msi.trakingrealtime.R
 import gob.pe.msi.trakingrealtime.presentation.feature.routes.routerList.model.Route
@@ -14,14 +17,15 @@ class RouteAdapter(private val routes: List<Route>, private val selectedRoute: R
     private var currentSelected: String? = selectedRoute?.route
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RouteViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.viewholder_list_route_2, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.viewholder_list_route_3, parent, false)
         return RouteViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: RouteViewHolder, position: Int) {
         val route = routes[position]
-        holder.routeName.text = route.routeName
-        holder.route.text = route.route
+        //holder.cardItemContainer.setBackgroundColor(route.direction.toColorInt())
+        holder.routeName.text = route.route
+        holder.route.text = "Ruta"//route.routeName
         holder.direction.text = route.direction
         holder.imgViewCheck.isSelected = route.route == currentSelected
         holder.updateRouteStyle(route.selected)
@@ -53,6 +57,7 @@ class RouteAdapter(private val routes: List<Route>, private val selectedRoute: R
 
     class RouteViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         //ButterKnife.bind(this, itemView)
+        //val cardItemContainer: RelativeLayout = itemView.findViewById(R.id.cardItemContainer)
         val routeName: TextView = itemView.findViewById(R.id.txtRouteName)
         val route: TextView = itemView.findViewById(R.id.txtRoute)
         val direction: TextView = itemView.findViewById(R.id.txtDirection)

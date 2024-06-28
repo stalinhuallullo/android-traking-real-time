@@ -39,6 +39,7 @@ android {
     buildFeatures {
         buildConfig = true
         dataBinding = true
+        viewBinding = true
     }
 }
 
@@ -53,6 +54,7 @@ dependencies {
     implementation("de.hdodenhof:circleimageview:3.1.0")         // circle image view
     implementation("com.mikhaellopez:circularimageview:4.3.1")
     implementation("com.balysv:material-ripple:1.0.2")
+    implementation("com.google.dagger:dagger:2.13")
     implementation("io.reactivex.rxjava3:rxjava:3.1.5")
     implementation("io.reactivex.rxjava3:rxandroid:3.0.2")
 
@@ -67,13 +69,14 @@ dependencies {
         "2.9.0" -> "com.squareup.retrofit2:converter-gson:$retrofitVersion"
         else -> "com.squareup.retrofit2:converter-gson:$retrofitVersion" // Puedes agregar más casos si es necesario
     }
-    val retrofitAdapter = when (retrofitVersion) {
+    val adapterRxjavaDependency = when (retrofitVersion) {
         "2.9.0" -> "com.squareup.retrofit2:adapter-rxjava3:$retrofitVersion"
         else -> "com.squareup.retrofit2:adapter-rxjava3:$retrofitVersion" // Puedes agregar más casos si es necesario
     }
     implementation(retrofitDependency)
     implementation(gsonDependency)
-    implementation(retrofitAdapter)
+    implementation(adapterRxjavaDependency)
+    implementation("com.squareup.okhttp3:logging-interceptor:4.2.1")
 
 
 
@@ -82,7 +85,13 @@ dependencies {
     implementation("com.google.android.gms:play-services-maps:18.0.2")
     implementation("com.google.android.gms:play-services-location:20.0.0")
 
+
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+    implementation(libs.javax.inject)
+
+
+
 }

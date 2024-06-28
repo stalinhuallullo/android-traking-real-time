@@ -112,6 +112,7 @@ class CustomItemBig (
     }*/
     fun enabledComponentes(value: Boolean) {
         binding.flItem.isEnabled = value
+        binding.btnGo.isEnabled= value
         enabledButton=value
         setAlpha()
     }

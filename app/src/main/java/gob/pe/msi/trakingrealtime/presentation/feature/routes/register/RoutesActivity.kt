@@ -1,13 +1,11 @@
 package gob.pe.msi.trakingrealtime.presentation.feature.routes.register
 
 import android.app.Activity
-import android.content.Context
 import android.content.Intent
 import android.graphics.PorterDuff
 import android.graphics.PorterDuffColorFilter
 import android.os.Build
 import android.os.Bundle
-import android.os.Parcelable
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -18,54 +16,62 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import gob.pe.msi.trakingrealtime.R
-import gob.pe.msi.trakingrealtime.data.entity.RouteListResponseEntity
-import gob.pe.msi.trakingrealtime.data.model.HttpResponse
+import gob.pe.msi.trakingrealtime.data.model.HttpResponseBus
 import gob.pe.msi.trakingrealtime.data.model.HttpResponseRoutes
-import gob.pe.msi.trakingrealtime.data.net.viewmodel.RoutesViewModel
+import gob.pe.msi.trakingrealtime.data.net.service.impl.RoutesService
+import gob.pe.msi.trakingrealtime.data.repository.RouteDataRepository
+import gob.pe.msi.trakingrealtime.data.repository.RouteRepository
+import gob.pe.msi.trakingrealtime.databinding.ActivityRoutesBinding
+import gob.pe.msi.trakingrealtime.domain.entity.ResponseRoute
+import gob.pe.msi.trakingrealtime.domain.executor.JobExecutor
+import gob.pe.msi.trakingrealtime.domain.executor.UIThread
+import gob.pe.msi.trakingrealtime.domain.interactor.RouteUseCase
 import gob.pe.msi.trakingrealtime.presentation.common.utils.OnSingleClickListener
 import gob.pe.msi.trakingrealtime.presentation.common.widget.CustomItemBig
 import gob.pe.msi.trakingrealtime.presentation.feature.routes.buses.BusesListActivity
 import gob.pe.msi.trakingrealtime.presentation.feature.routes.buses.model.Bus
 import gob.pe.msi.trakingrealtime.presentation.feature.routes.routerList.RoutesListActivity
 import gob.pe.msi.trakingrealtime.presentation.feature.routes.routerList.model.Route
-import gob.pe.msi.trakingrealtime.presentation.feature.routes.utils.UtilsRoutes
 import gob.pe.msi.trakingrealtime.presentation.feature.traking.TrackingActivity
 import gob.pe.msi.trakingrealtime.utils.Constants
 import gob.pe.msi.trakingrealtime.utils.Tools
-import java.io.Serializable
 
+//@AndroidEntryPoint
+class RoutesActivity : AppCompatActivity(), RouteContract.View, View.OnClickListener, CustomItemBig.ItemListener {
 
-class RoutesActivity : AppCompatActivity(), View.OnClickListener, CustomItemBig.ItemListener {
-
-    private lateinit var toolbar: Toolbar
-    lateinit var ciRoutes: CustomItemBig
-    lateinit var ciBuses: CustomItemBig
-    lateinit var listener: RoutesListener
-    private lateinit var btnSave: TextView
-    var selectedRoute: Route? = null
-    var selectedBus: Bus? = null
+    private lateinit var binding: ActivityRoutesBinding
+    private lateinit var routePresenter: RoutePresenter
     private lateinit var startForResultRoutes : ActivityResultLauncher<Intent>
     private lateinit var startForResultBuses : ActivityResultLauncher<Intent>
 
-    private lateinit var viewModel: RoutesViewModel
+
+    private lateinit var toolbar: Toolbar
+    private lateinit var ciRoutes: CustomItemBig
+    private lateinit var ciBuses: CustomItemBig
+    private lateinit var btnSave: TextView
+
+    private var selectedRoute: Route? = null
+    private var selectedBus: Bus? = null
+
+    //private lateinit var viewModel: RoutesViewModel
     private var routesHttp: HttpResponseRoutes? = null
+    private var busHttp: HttpResponseBus? = null
+    private var busHttpsss: ResponseRoute? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        //enableEdgeToEdge()
-        setContentView(R.layout.activity_routes)
+        binding = ActivityRoutesBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
         initToolbar()
         initComponent()
         initClickListener()
         registerActivityResultRoutes()
         registerActivityResultBuses()
+
     }
-
-
 
     private fun initToolbar() {
 
@@ -90,26 +96,18 @@ class RoutesActivity : AppCompatActivity(), View.OnClickListener, CustomItemBig.
         ciBuses = findViewById(R.id.ciBuses)
         btnSave = findViewById(R.id.btnSave)
 
+
         ciRoutes.listener = this
         ciBuses.listener = this
+        ciBuses.enabledComponentes(false)
 
-        viewModel = ViewModelProvider(this)[RoutesViewModel::class.java]
+        //routePresenter = RoutePresenter(BusRepository(BusesService()), RouteRepository(RoutesService()))
 
-        viewModel.routesLiveData.observe(this) { response ->
-            response?.let {
-                if (it.CodigoRespuesta == "01" && it.Respuesta == "Exito") {
-                    routesHttp = it
-                    //routesHttp = it.datosList
-                } else {
-                    // Error, handle the error message
-                    Toast.makeText(this, "ERROR ===> ${it.Respuesta}", Toast.LENGTH_SHORT).show()
-                }
-            }
-        }
-
-        // Call your API
-        viewModel.fetchRoutes(mapOf("Authorization" to "Bearer token"))
-
+        // Inicializacion de Presenter
+        val routeUseCase = RouteUseCase(RouteRepository(RoutesService()), RouteDataRepository(), JobExecutor(), UIThread())
+        routePresenter = RoutePresenter(this, routeUseCase)
+        //routePresenter.getDataRoute()
+        routePresenter.getDataBuses(1)
     }
 
     fun initClickListener(){
@@ -128,15 +126,6 @@ class RoutesActivity : AppCompatActivity(), View.OnClickListener, CustomItemBig.
     }
 
 
-    override fun attachBaseContext(context: Context?) {
-        super.attachBaseContext(context)
-        if (context is RoutesListener) {
-            this.listener = context
-        }
-    }
-
-
-
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_dashboard, menu)
         return true
@@ -144,8 +133,6 @@ class RoutesActivity : AppCompatActivity(), View.OnClickListener, CustomItemBig.
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
             android.R.id.home -> {
-                //Toast.makeText(applicationContext, "MENU", Toast.LENGTH_SHORT).show()
-                //finish()
                 toolbar.setNavigationOnClickListener { onBackPressedDispatcher.onBackPressed() }
             }
             else -> {
@@ -156,7 +143,7 @@ class RoutesActivity : AppCompatActivity(), View.OnClickListener, CustomItemBig.
     }
 
     override fun onClick(v: View?) {
-        when(v?.id){
+        when(v?.id) {
             R.id.imgProfile -> {
                 Toast.makeText(applicationContext, "PROFILE", Toast.LENGTH_SHORT).show()
             }
@@ -199,10 +186,13 @@ class RoutesActivity : AppCompatActivity(), View.OnClickListener, CustomItemBig.
         if(selectedRoute != null) {
             ciRoutes.setVisibleDetail(true)
             ciRoutes.setDrawableResource(
-                ContextCompat.getDrawable(this, UtilsRoutes.changeImageByText(selectedRoute!!.route))
+                //ContextCompat.getDrawable(this, UtilsRoutes.changeImageByText(selectedRoute!!.route))
+                        ContextCompat.getDrawable(this, R.drawable.ic_location_blue)
             )
-            ciRoutes.setTitle(selectedRoute!!.routeName)
+            ciRoutes.setTitle(selectedRoute!!.route)
             ciRoutes.setSubTitle(selectedRoute!!.direction)
+
+            ciBuses.enabledComponentes(true)
         }
         validateButtonSaved()
     }
@@ -218,53 +208,26 @@ class RoutesActivity : AppCompatActivity(), View.OnClickListener, CustomItemBig.
     }
 
     fun validateRoutesAvailable() {
-        /*val paymentsAvailable: MutableList<PaymentMethod> = ArrayList()
-        paymentsRecurrency.forEach { t ->
-            paymentsCurrent.forEach { c ->
-                if (t.id == c.id) {
-                    paymentsAvailable.add(c)
-                }
-            }
-        }*/
-
-        /*val paymentsAvailable: MutableList<PaymentMethod> = ArrayList()
-        paymentsRecurrency.forEach { t ->
-            paymentsCurrent.forEach { c ->
-                if (t.id == c.id) {
-                    paymentsAvailable.add(c)
-                }
-            }
-        }*/
-
-        println("routesHttp ==== > ${routesHttp}")
         val intent = Intent(applicationContext, RoutesListActivity::class.java)
         selectedRoute?.let {
             intent.putExtra(Constants.ROUTE_RESPONSE_KEY, it)
         }
         routesHttp?.let {
             intent.putExtra(Constants.EXTRA_ROUTE_METHOD, it)
-            //intent.putParcelableArrayListExtra(Constants.EXTRA_ROUTE_METHOD, ArrayList(it))
         }
 
         startForResultRoutes.launch(intent)
-        //listener.goToRoutes()
     }
 
     fun validateBusesAvailable() {
-        val buses = listOf(
-            Bus(1, "XYZ-123", "TOYOTA"),
-            Bus(2, "AAA-123", "TOYOTA"),
-            Bus(3, "BBB-123", "TOYOTA"),
-            Bus(4, "CCC-123", "TOYOTA"),
-            Bus(5, "DDD-123", "TOYOTA"),
-            Bus(6, "EEE-123", "TOYOTA"),
-        )
         val intent = Intent(applicationContext, BusesListActivity::class.java)
         selectedBus?.let {
             intent.putExtra(Constants.BUS_RESPONSE_KEY, it)
         }
-        //intent.putParcelableArrayListExtra(Constants.BUSES_DATA, buses)
-        intent.putParcelableArrayListExtra(Constants.BUSES_DATA, ArrayList(buses))
+        busHttp?.let {
+            intent.putExtra(Constants.EXTRA_BUS_METHOD, it)
+        }
+
         startForResultBuses.launch(intent)
     }
 
@@ -280,17 +243,38 @@ class RoutesActivity : AppCompatActivity(), View.OnClickListener, CustomItemBig.
         when (tag) {
             ciRoutes.tag -> {
                 validateRoutesAvailable()
-                //currentRoutes()
             }
             ciBuses.tag -> {
                 validateBusesAvailable()
-                //currentBuses()
             }
         }
     }
-    interface RoutesListener {
-        //fun goToRoutes(payments: List<PaymentMethod>)
-        fun goToRoutes()
+
+    override fun showLoading() {
+        binding.viewLoading.root.visibility = View.VISIBLE
+    }
+
+    override fun hideLoading() {
+        binding.viewLoading.root.visibility = View.GONE
+    }
+
+    override fun showDataRoute(response: HttpResponseRoutes) {
+        routesHttp = response
+        println("response showDataRoute   ======> $response")
+    }
+
+    override fun showDataBus(response: ResponseRoute) {
+        busHttpsss = response
+        println("response showDataBus   ======> $response")
+    }
+
+    override fun showError(message: String) {
+
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        routePresenter.detachView()
     }
 
 }

@@ -13,8 +13,8 @@ class RoutesViewModel : ViewModel() {
     private val _routesLiveData = MutableLiveData<HttpResponseRoutes>()
     val routesLiveData: LiveData<HttpResponseRoutes> = _routesLiveData
 
-    fun fetchRoutes(headers: Map<String, String>) {
-        routesService.listRoutes(headers)
+    fun fetchRoutes() {
+        routesService.listRoutes()
             .subscribe({ response ->
                 _routesLiveData.value = response
             }, { error ->

@@ -14,16 +14,18 @@ import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import gob.pe.msi.trakingrealtime.R
+import gob.pe.msi.trakingrealtime.data.model.HttpResponseBus
 import gob.pe.msi.trakingrealtime.presentation.common.utils.OnSingleClickListener
 import gob.pe.msi.trakingrealtime.presentation.feature.routes.buses.adapter.BusesListAdapter
 import gob.pe.msi.trakingrealtime.presentation.feature.routes.buses.model.Bus
 import gob.pe.msi.trakingrealtime.utils.Constants
 import gob.pe.msi.trakingrealtime.utils.Tools
 
-class BusesListActivity : AppCompatActivity(), BusesListAdapter.BusesListener {
+class BusesListActivity : AppCompatActivity(), BusesListView, BusesListAdapter.BusesListener {
 
     private lateinit var recyclerView: RecyclerView
     private var selected: Bus? = null
+    private var busHttp: HttpResponseBus? = null
     private lateinit var  adapter: BusesListAdapter
     private lateinit var toolbar: Toolbar
     private lateinit var btnSave: TextView
@@ -32,12 +34,6 @@ class BusesListActivity : AppCompatActivity(), BusesListAdapter.BusesListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_buses_list)
-
-        selected = if (Build.VERSION.SDK_INT >= 33) {
-            intent.getParcelableExtra(Constants.BUS_RESPONSE_KEY, Bus::class.java)
-        } else {
-            intent.getParcelableExtra(Constants.BUS_RESPONSE_KEY)
-        }
 
         initToolbar()
         initComponents()
@@ -64,6 +60,15 @@ class BusesListActivity : AppCompatActivity(), BusesListAdapter.BusesListener {
 
     fun initComponents() {
         btnSave = findViewById(R.id.btnSave)
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            selected = intent.getParcelableExtra(Constants.BUS_RESPONSE_KEY, Bus::class.java)
+            busHttp = intent.getParcelableExtra(Constants.EXTRA_ROUTE_METHOD, HttpResponseBus::class.java)
+            //routesHttp = intent.getParcelableExtra(Constants.EXTRA_ROUTE_METHOD, HttpResponse::class.java)
+        } else {
+            selected = intent.getParcelableExtra(Constants.BUS_RESPONSE_KEY)
+            busHttp = intent.getParcelableExtra(Constants.EXTRA_ROUTE_METHOD)
+        }
     }
 
     fun initClickListener(){
@@ -78,6 +83,7 @@ class BusesListActivity : AppCompatActivity(), BusesListAdapter.BusesListener {
             }
         })
     }
+
     fun validateButtonSaved() {
         if (selected != null) {
             btnSave.isEnabled = true
@@ -88,25 +94,25 @@ class BusesListActivity : AppCompatActivity(), BusesListAdapter.BusesListener {
     fun initRVPresentations() {
         recyclerView = findViewById(R.id.recyclerView)
         recyclerView.itemAnimator = null
-        val buses = listOf(
-            Bus(1, "XYZ-123", "TOYOTA"),
-            Bus(2, "AAA-123", "TOYOTA"),
-            Bus(3, "BBB-123", "TOYOTA"),
-            Bus(4, "CCC-123", "TOYOTA"),
-            Bus(5, "DDD-123", "TOYOTA"),
-            Bus(6, "EEE-123", "TOYOTA"),
-        )
+        var routes: List<Bus> =  busHttp!!.Datos?.map { Bus(it.CODBUS, it.TXTBUS, it.TXTPLACA) }!!
 
-        adapter = BusesListAdapter(buses, selected, this)
+        adapter = BusesListAdapter(routes, selected,this)
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = adapter
     }
 
     override fun updateProduct(bus: Bus, position: Int) {
         selected = Bus(bus.id, bus.plate, bus.brand)
-        //btnSave.isEnabled = true
         validateButtonSaved()
 
+    }
+
+    override fun showLoading() {
+        TODO("Not yet implemented")
+    }
+
+    override fun hideLoading() {
+        TODO("Not yet implemented")
     }
 
 }

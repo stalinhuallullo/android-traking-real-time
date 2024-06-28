@@ -9,6 +9,16 @@ import retrofit2.converter.gson.GsonConverterFactory
 object RestApi {
 
     private var retrofit: Retrofit? = null
+    fun createRetrofitInstance(baseUrl: String): Retrofit? {
+        if (retrofit == null) {
+            retrofit = Retrofit.Builder()
+                .baseUrl(baseUrl)
+                .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
+                .build()
+        }
+        return retrofit
+    }
 
     val retrofitInstance: Retrofit?
     get() {

@@ -4,16 +4,16 @@ import android.os.Parcel
 import android.os.Parcelable
 
 
-open class Bus(val id: Long, val plate: String, val brand: String, var selected: Boolean = false) : Parcelable {
+open class Bus(val id: String, val plate: String, val brand: String, var selected: Boolean = false) : Parcelable {
 
     constructor(parcel: Parcel) : this(
-        parcel.readLong(),
+        parcel.readString()!!,
         parcel.readString()!!,
         parcel.readString()!!,
         parcel.readBoolean()
     )
     override fun writeToParcel(parcel: Parcel, flags: Int) {
-        parcel.writeLong(id)
+        parcel.writeString(id)
         parcel.writeString(plate)
         parcel.writeString(brand)
         parcel.writeBoolean(selected)

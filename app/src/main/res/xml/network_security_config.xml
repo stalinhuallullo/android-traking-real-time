@@ -4,3 +4,11 @@
         <domain includeSubdomains="true">test.munisanisidro.gob.pe</domain>
     </domain-config>
 </network-security-config>
+
+<!--<network-security-config>
+    <base-config cleartextTrafficPermitted="true">
+        <trust-anchors>
+            <certificates src="system" />
+        </trust-anchors>
+    </base-config>
+</network-security-config>-->
