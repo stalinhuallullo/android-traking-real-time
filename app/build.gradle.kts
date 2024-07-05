@@ -80,18 +80,23 @@ dependencies {
 
 
 
+    // STYLE GOOGLE MAPS
     implementation("com.google.android.material:material:1.6.1")
     implementation("com.google.android.gms:play-services:7.0.0")
     implementation("com.google.android.gms:play-services-maps:18.0.2")
     implementation("com.google.android.gms:play-services-location:20.0.0")
+    implementation(libs.play.services.maps)
 
+    // STYLE MAP BOX
+    implementation(libs.mapbox.maps)
+    /*implementation(libs.mapbox.android.plugin.annotation)
 
+    implementation(libs.mapbox.android.navigation)
+    implementation(libs.mapbox.android.navigationcore.navigation)
+    implementation(libs.mapbox.android.ui.components)*/
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     implementation(libs.javax.inject)
-
-
-
 }

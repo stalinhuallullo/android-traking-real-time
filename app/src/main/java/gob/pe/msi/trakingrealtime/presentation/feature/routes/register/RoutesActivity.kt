@@ -1,7 +1,9 @@
 package gob.pe.msi.trakingrealtime.presentation.feature.routes.register
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.PorterDuff
 import android.graphics.PorterDuffColorFilter
 import android.os.Build
@@ -15,12 +17,14 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import gob.pe.msi.trakingrealtime.R
 import gob.pe.msi.trakingrealtime.data.model.HttpResponseBus
 import gob.pe.msi.trakingrealtime.data.model.HttpResponseRoutes
+import gob.pe.msi.trakingrealtime.data.net.service.impl.BusesService
 import gob.pe.msi.trakingrealtime.data.net.service.impl.RoutesService
-import gob.pe.msi.trakingrealtime.data.repository.RouteDataRepository
+import gob.pe.msi.trakingrealtime.data.repository.BusRepository
 import gob.pe.msi.trakingrealtime.data.repository.RouteRepository
 import gob.pe.msi.trakingrealtime.databinding.ActivityRoutesBinding
 import gob.pe.msi.trakingrealtime.domain.entity.ResponseRoute
@@ -29,6 +33,7 @@ import gob.pe.msi.trakingrealtime.domain.executor.UIThread
 import gob.pe.msi.trakingrealtime.domain.interactor.RouteUseCase
 import gob.pe.msi.trakingrealtime.presentation.common.utils.OnSingleClickListener
 import gob.pe.msi.trakingrealtime.presentation.common.widget.CustomItemBig
+import gob.pe.msi.trakingrealtime.presentation.feature.navegation.NavegationActivity
 import gob.pe.msi.trakingrealtime.presentation.feature.routes.buses.BusesListActivity
 import gob.pe.msi.trakingrealtime.presentation.feature.routes.buses.model.Bus
 import gob.pe.msi.trakingrealtime.presentation.feature.routes.routerList.RoutesListActivity
@@ -37,8 +42,12 @@ import gob.pe.msi.trakingrealtime.presentation.feature.traking.TrackingActivity
 import gob.pe.msi.trakingrealtime.utils.Constants
 import gob.pe.msi.trakingrealtime.utils.Tools
 
-//@AndroidEntryPoint
-class RoutesActivity : AppCompatActivity(), RouteContract.View, View.OnClickListener, CustomItemBig.ItemListener {
+class RoutesActivity :
+    AppCompatActivity(),
+    RouteContract.View,
+    View.OnClickListener,
+    CustomItemBig.ItemListener {
+
 
     private lateinit var binding: ActivityRoutesBinding
     private lateinit var routePresenter: RoutePresenter
@@ -54,16 +63,20 @@ class RoutesActivity : AppCompatActivity(), RouteContract.View, View.OnClickList
     private var selectedRoute: Route? = null
     private var selectedBus: Bus? = null
 
-    //private lateinit var viewModel: RoutesViewModel
     private var routesHttp: HttpResponseRoutes? = null
     private var busHttp: HttpResponseBus? = null
     private var busHttpsss: ResponseRoute? = null
 
+    private val REQUEST_CODE_LOCATION_PERMISSION = 1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityRoutesBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        if (isTracking()) {
+            navigateToNavigationActivity()
+        }
 
         initToolbar()
         initComponent()
@@ -76,7 +89,6 @@ class RoutesActivity : AppCompatActivity(), RouteContract.View, View.OnClickList
     private fun initToolbar() {
 
         toolbar = findViewById<View>(R.id.toolbar) as Toolbar
-        //toolbar.setNavigationIcon(R.drawable.ic_notes)
         toolbar.setNavigationIcon(R.drawable.ic_arrow_back)
         toolbar.navigationIcon?.colorFilter = PorterDuffColorFilter(resources.getColor(R.color.grey_60, theme), PorterDuff.Mode.SRC_ATOP)
         toolbar.setBackgroundColor(resources.getColor(R.color.white, theme))
@@ -101,35 +113,93 @@ class RoutesActivity : AppCompatActivity(), RouteContract.View, View.OnClickList
         ciBuses.listener = this
         ciBuses.enabledComponentes(false)
 
-        //routePresenter = RoutePresenter(BusRepository(BusesService()), RouteRepository(RoutesService()))
 
         // Inicializacion de Presenter
-        val routeUseCase = RouteUseCase(RouteRepository(RoutesService()), RouteDataRepository(), JobExecutor(), UIThread())
+        val routeUseCase = RouteUseCase(RouteRepository(RoutesService()), BusRepository(BusesService()), JobExecutor(), UIThread())
         routePresenter = RoutePresenter(this, routeUseCase)
-        //routePresenter.getDataRoute()
-        routePresenter.getDataBuses(1)
+
+        if (checkPermissions()) {
+            //setupButtonClick()
+        } else {
+            requestPermissions()
+        }
     }
 
-    fun initClickListener(){
+    private fun checkPermissions(): Boolean {
+        val fineLocation = ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION)
+        val coarseLocation = ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION)
+        val foregroundServiceLocation = ContextCompat.checkSelfPermission(this, android.Manifest.permission.FOREGROUND_SERVICE_LOCATION)
+        return fineLocation == PackageManager.PERMISSION_GRANTED &&
+                coarseLocation == PackageManager.PERMISSION_GRANTED &&
+                foregroundServiceLocation == PackageManager.PERMISSION_GRANTED
+    }
+
+    private fun requestPermissions() {
+        ActivityCompat.requestPermissions(this,
+            arrayOf(
+                android.Manifest.permission.ACCESS_FINE_LOCATION,
+                android.Manifest.permission.ACCESS_COARSE_LOCATION,
+                android.Manifest.permission.FOREGROUND_SERVICE_LOCATION
+            ),
+            REQUEST_CODE_LOCATION_PERMISSION
+        )
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == REQUEST_CODE_LOCATION_PERMISSION) {
+            if (grantResults.isNotEmpty() && grantResults.all { it == PackageManager.PERMISSION_GRANTED }) {
+                //setupButtonClick()
+            } else {
+                // Manejar el caso en que no se otorgaron los permisos
+                Toast.makeText(this, "Permissions required for the app to function", Toast.LENGTH_LONG).show()
+            }
+        }
+    }
+
+    private fun initClickListener(){
         ciRoutes.setOnclickItem(this)
         ciBuses.setOnclickItem(this)
 
         btnSave.setOnClickListener(object : OnSingleClickListener() {
             override fun onSingleClick(v: View) {
-                val intent = Intent(baseContext, TrackingActivity::class.java)
+                routePresenter.onStartNavigationClicked()
+                /*val intent = Intent(baseContext, TrackingMapActivity::class.java)
                 intent.putExtra(Constants.REGISTER_TO_TRACKING_ROUTE, selectedRoute)
                 intent.putExtra(Constants.REGISTER_TO_TRACKING_BUS, selectedBus)
-                startActivity(intent)
+                saveTrackingState(true)
+                startActivity(intent)*/
+
+
+                /*val intent = Intent(baseContext, TrackingActivity::class.java)
+                intent.putExtra(Constants.REGISTER_TO_TRACKING_ROUTE, selectedRoute)
+                intent.putExtra(Constants.REGISTER_TO_TRACKING_BUS, selectedBus)
+                saveTrackingState(true)
+                startActivity(intent)*/
             }
         })
-
     }
 
+
+
+    override fun navigateToNavigationActivity() {
+        val intent = Intent(baseContext, NavegationActivity::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+        intent.putExtra(Constants.REGISTER_TO_TRACKING_ROUTE, selectedRoute)
+        intent.putExtra(Constants.REGISTER_TO_TRACKING_BUS, selectedBus)
+        saveTrackingState(true)
+        startActivity(intent)
+        finish()
+        /*val intent = Intent(this, TrackingMapActivity::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+        startActivity(intent)*/
+    }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_dashboard, menu)
         return true
     }
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
             android.R.id.home -> {
@@ -156,7 +226,7 @@ class RoutesActivity : AppCompatActivity(), RouteContract.View, View.OnClickList
             if (result.resultCode == Activity.RESULT_OK) {
                 val data = result.data
 
-                if (Build.VERSION.SDK_INT >= 33) { // TIRAMISU onwards
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) { // TIRAMISU onwards
                     selectedRoute = data?.getParcelableExtra(Constants.ROUTE_RESPONSE_KEY, Route::class.java)
                 } else {
                     selectedRoute = data?.getParcelableExtra(Constants.ROUTE_RESPONSE_KEY)
@@ -170,7 +240,7 @@ class RoutesActivity : AppCompatActivity(), RouteContract.View, View.OnClickList
             if (result.resultCode == Activity.RESULT_OK) {
                 val data = result.data
 
-                if (Build.VERSION.SDK_INT >= 33) { // TIRAMISU onwards
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) { // TIRAMISU onwards
                     selectedBus = data?.getParcelableExtra(Constants.BUS_RESPONSE_KEY, Bus::class.java)
                 } else {
                     selectedBus = data?.getParcelableExtra(Constants.BUS_RESPONSE_KEY)
@@ -181,8 +251,7 @@ class RoutesActivity : AppCompatActivity(), RouteContract.View, View.OnClickList
     }
 
 
-    fun currentRoutes() {
-
+    private fun currentRoutes() {
         if(selectedRoute != null) {
             ciRoutes.setVisibleDetail(true)
             ciRoutes.setDrawableResource(
@@ -197,7 +266,7 @@ class RoutesActivity : AppCompatActivity(), RouteContract.View, View.OnClickList
         validateButtonSaved()
     }
 
-    fun currentBuses() {
+    private fun currentBuses() {
         if(selectedBus != null){
             ciBuses.setVisibleDetail(true)
             ciBuses.setDrawableResource(ContextCompat.getDrawable(this, R.drawable.ic_bus))
@@ -207,31 +276,21 @@ class RoutesActivity : AppCompatActivity(), RouteContract.View, View.OnClickList
         validateButtonSaved()
     }
 
-    fun validateRoutesAvailable() {
+    private fun validateRoutesAvailable() {
         val intent = Intent(applicationContext, RoutesListActivity::class.java)
-        selectedRoute?.let {
-            intent.putExtra(Constants.ROUTE_RESPONSE_KEY, it)
-        }
-        routesHttp?.let {
-            intent.putExtra(Constants.EXTRA_ROUTE_METHOD, it)
-        }
-
+        intent.putExtra(Constants.ROUTE_RESPONSE_KEY, selectedRoute)
+        intent.putExtra(Constants.EXTRA_ROUTE_METHOD, routesHttp)
         startForResultRoutes.launch(intent)
     }
 
-    fun validateBusesAvailable() {
+    private fun validateBusesAvailable() {
         val intent = Intent(applicationContext, BusesListActivity::class.java)
-        selectedBus?.let {
-            intent.putExtra(Constants.BUS_RESPONSE_KEY, it)
-        }
-        busHttp?.let {
-            intent.putExtra(Constants.EXTRA_BUS_METHOD, it)
-        }
-
+        intent.putExtra(Constants.BUS_RESPONSE_KEY, selectedBus)
+        intent.putExtra(Constants.EXTRA_BUS_METHOD, busHttp)
         startForResultBuses.launch(intent)
     }
 
-    fun validateButtonSaved() {
+    private fun validateButtonSaved() {
         if (selectedRoute != null && selectedBus != null) {
             btnSave.isEnabled = true
         } else {
@@ -242,10 +301,10 @@ class RoutesActivity : AppCompatActivity(), RouteContract.View, View.OnClickList
     override fun testClick(tag: String?) {
         when (tag) {
             ciRoutes.tag -> {
-                validateRoutesAvailable()
+                routePresenter.getDataRoute()
             }
             ciBuses.tag -> {
-                validateBusesAvailable()
+                routePresenter.getDataBuses(selectedRoute!!.routeName)
             }
         }
     }
@@ -260,12 +319,12 @@ class RoutesActivity : AppCompatActivity(), RouteContract.View, View.OnClickList
 
     override fun showDataRoute(response: HttpResponseRoutes) {
         routesHttp = response
-        println("response showDataRoute   ======> $response")
+        validateRoutesAvailable()
     }
 
-    override fun showDataBus(response: ResponseRoute) {
-        busHttpsss = response
-        println("response showDataBus   ======> $response")
+    override fun showDataBus(response: HttpResponseBus) {
+        busHttp = response
+        validateBusesAvailable()
     }
 
     override fun showError(message: String) {
@@ -275,6 +334,18 @@ class RoutesActivity : AppCompatActivity(), RouteContract.View, View.OnClickList
     override fun onDestroy() {
         super.onDestroy()
         routePresenter.detachView()
+    }
+    private fun saveTrackingState(isTracking: Boolean) {
+        val sharedPref = getSharedPreferences("tracking_prefs", Context.MODE_PRIVATE)
+        with(sharedPref.edit()) {
+            putBoolean("isTracking", isTracking)
+            apply()
+        }
+    }
+
+    private fun isTracking(): Boolean {
+        val sharedPref = getSharedPreferences("tracking_prefs", Context.MODE_PRIVATE)
+        return sharedPref.getBoolean("isTracking", false)
     }
 
 }

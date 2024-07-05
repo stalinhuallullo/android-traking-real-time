@@ -27,9 +27,7 @@ import gob.pe.msi.trakingrealtime.utils.Tools
 
 
 class TrackingActivity : AppCompatActivity(), View.OnClickListener, EasyPermissions.PermissionCallbacks {
-    private val TAG: String = "MAIN ACTIVITY"
 
-    private lateinit var toolbar: Toolbar
 
     //private lateinit var trackFriend: Button
     private lateinit var trackerBtn: Button
@@ -167,20 +165,6 @@ class TrackingActivity : AppCompatActivity(), View.OnClickListener, EasyPermissi
         adapter.addLocation(LocationModel(1, lng.toString(), lat.toString(), hours))
     }*/
 
-    fun addItemListLocationMock() {
-        val locations = listOf(
-            LocationModel(1,"132", "30", "Doe"),
-            LocationModel(100,"Jane", "25", "Smith"),
-            LocationModel(200,"Michael", "35", "Johnson"),
-            LocationModel(1000,"132", "30", "Doe"),
-            LocationModel(300,"Jane", "25", "Smith"),
-            LocationModel(400,"Michael", "35", "Johnson")
-        ).toMutableList()
-
-
-        recyclerView?.layoutManager = LinearLayoutManager(this)
-        recyclerView?.adapter = LocationRealTimeAdapter(locations)
-    }
 
     override fun onPermissionsDenied(requestCode: Int, perms: List<String>) {
         if(EasyPermissions.somePermissionDenied(this, perms.first())) {

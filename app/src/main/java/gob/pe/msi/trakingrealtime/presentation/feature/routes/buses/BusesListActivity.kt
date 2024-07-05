@@ -21,7 +21,7 @@ import gob.pe.msi.trakingrealtime.presentation.feature.routes.buses.model.Bus
 import gob.pe.msi.trakingrealtime.utils.Constants
 import gob.pe.msi.trakingrealtime.utils.Tools
 
-class BusesListActivity : AppCompatActivity(), BusesListView, BusesListAdapter.BusesListener {
+class BusesListActivity : AppCompatActivity(), BusesListAdapter.BusesListener {
 
     private lateinit var recyclerView: RecyclerView
     private var selected: Bus? = null
@@ -63,11 +63,10 @@ class BusesListActivity : AppCompatActivity(), BusesListView, BusesListAdapter.B
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             selected = intent.getParcelableExtra(Constants.BUS_RESPONSE_KEY, Bus::class.java)
-            busHttp = intent.getParcelableExtra(Constants.EXTRA_ROUTE_METHOD, HttpResponseBus::class.java)
-            //routesHttp = intent.getParcelableExtra(Constants.EXTRA_ROUTE_METHOD, HttpResponse::class.java)
+            busHttp = intent.getParcelableExtra(Constants.EXTRA_BUS_METHOD, HttpResponseBus::class.java)
         } else {
             selected = intent.getParcelableExtra(Constants.BUS_RESPONSE_KEY)
-            busHttp = intent.getParcelableExtra(Constants.EXTRA_ROUTE_METHOD)
+            busHttp = intent.getParcelableExtra(Constants.EXTRA_BUS_METHOD)
         }
     }
 
@@ -105,14 +104,6 @@ class BusesListActivity : AppCompatActivity(), BusesListView, BusesListAdapter.B
         selected = Bus(bus.id, bus.plate, bus.brand)
         validateButtonSaved()
 
-    }
-
-    override fun showLoading() {
-        TODO("Not yet implemented")
-    }
-
-    override fun hideLoading() {
-        TODO("Not yet implemented")
     }
 
 }

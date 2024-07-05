@@ -18,9 +18,9 @@ import javax.inject.Singleton
 class RouteRepository (private val routesService: RoutesService) {
 
     fun getListRoutes(): Observable<HttpResponseRoutes> {
-        return routesService.listRoutes()
-        /*return  routesService.listRoutes()
-            .subscribeOn(Schedulers.io())
+        //return routesService.listRoutes()
+        return  routesService.listRoutes()
+            /*.subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())*/
     }
 

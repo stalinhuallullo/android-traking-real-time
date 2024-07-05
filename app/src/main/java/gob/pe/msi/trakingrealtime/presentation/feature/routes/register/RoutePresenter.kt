@@ -1,14 +1,19 @@
 package gob.pe.msi.trakingrealtime.presentation.feature.routes.register
 
+import gob.pe.msi.trakingrealtime.data.model.HttpResponseBus
 import gob.pe.msi.trakingrealtime.data.model.HttpResponseRoutes
 import gob.pe.msi.trakingrealtime.domain.entity.ResponseRoute
 import gob.pe.msi.trakingrealtime.domain.interactor.BaseObserver
 import gob.pe.msi.trakingrealtime.domain.interactor.RouteUseCase
 
 class RoutePresenter  (
-    private val view: RouteContract.View,
+    private var view: RouteContract.View,
     private val routeUseCase: RouteUseCase
 ) : RouteContract.Presenter {
+
+    fun onStartNavigationClicked() {
+        view.navigateToNavigationActivity()
+    }
 
     override fun getDataRoute() {
         view.showLoading()
@@ -18,10 +23,6 @@ class RoutePresenter  (
     private inner class UpdateRouteObserver : BaseObserver<HttpResponseRoutes>() {
 
         override fun onNext(t: HttpResponseRoutes) {
-            println("TAYLOR onNext 1=========> $t")
-            println("TAYLOR onNext 2=========> ${t.CodigoRespuesta}")
-            println("TAYLOR onNext 3=========> ${t.Respuesta}")
-            println("TAYLOR onNext 4=========> ${t.Datos}")
             view.hideLoading()
             view.showDataRoute(t)
             super.onNext(t)
@@ -29,29 +30,24 @@ class RoutePresenter  (
         }
 
         override fun onComplete() {
-            println("TAYLOR onComplete =======> ")
             super.onComplete()
         }
 
         override fun onError(exception: Throwable) {
-            println("TAYLOR onError =======> $exception")
             //routeView!!.onError(ErrorFactory.create(exception))
             view!!.hideLoading()
             super.onError(exception)
         }
     }
 
-    override fun getDataBuses(id: Int) {
+    override fun getDataBuses(code: String) {
         view.showLoading()
-        routeUseCase.getListBuses(UpdateBusesObserver())
+        routeUseCase.getListBuses(code, UpdateBusesObserver())
     }
-    private inner class UpdateBusesObserver : BaseObserver<ResponseRoute>() {
 
-        override fun onNext(t: ResponseRoute) {
-            println("TAYLOR showDataBus 1=========> $t")
-            println("TAYLOR showDataBus 2=========> ${t.CodigoRespuesta}")
-            println("TAYLOR showDataBus 3=========> ${t.Respuesta}")
-            println("TAYLOR showDataBus 4=========> ${t.Datos}")
+    private inner class UpdateBusesObserver : BaseObserver<HttpResponseBus>() {
+
+        override fun onNext(t: HttpResponseBus) {
             view.hideLoading()
             view.showDataBus(t)
             super.onNext(t)
@@ -59,20 +55,19 @@ class RoutePresenter  (
         }
 
         override fun onComplete() {
-            println("TAYLOR onComplete =======> ")
             super.onComplete()
         }
 
         override fun onError(exception: Throwable) {
-            println("TAYLOR onError =======> $exception")
             //routeView!!.onError(ErrorFactory.create(exception))
-            view!!.hideLoading()
+            view.hideLoading()
             super.onError(exception)
         }
     }
 
     override fun detachView() {
         routeUseCase.dispose()
+
     }
 
 

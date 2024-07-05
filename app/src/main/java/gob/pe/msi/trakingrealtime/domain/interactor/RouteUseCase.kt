@@ -1,5 +1,6 @@
 package gob.pe.msi.trakingrealtime.domain.interactor
 
+import gob.pe.msi.trakingrealtime.data.model.HttpResponseBus
 import gob.pe.msi.trakingrealtime.data.model.HttpResponseRoutes
 import gob.pe.msi.trakingrealtime.data.repository.BusRepository
 import gob.pe.msi.trakingrealtime.data.repository.RouteDataRepository
@@ -24,7 +25,7 @@ class RouteUseCase
  */
 (
     private val routeRepository: RouteRepository,
-    private val busRepository: RouteDataRepository,
+    private val busRepository: BusRepository,
     private val threadExecutor: ThreadExecutor,
     private val postExecutionThread: PostExecutionThread
 ): UseCase(threadExecutor, postExecutionThread) {
@@ -33,7 +34,7 @@ class RouteUseCase
         execute(routeRepository.getListRoutes(), observer)
     }
 
-    fun getListBuses(observer: DisposableObserver<ResponseRoute>) {
-        execute(busRepository.getListRoutes(), observer)
+    fun getListBuses(code: String, observer: DisposableObserver<HttpResponseBus>) {
+        execute(busRepository.getListBuses(code), observer)
     }
 }

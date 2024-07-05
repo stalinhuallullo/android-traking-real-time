@@ -12,8 +12,8 @@ class BusRepository (private val busesService: BusesService) {
 
     fun getListBuses(code: String): Observable<HttpResponseBus> {
         return  busesService.listBuses(code)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
+            /*.subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())*/
     }
 
 }

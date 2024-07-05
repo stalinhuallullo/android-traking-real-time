@@ -10,6 +10,12 @@ appcompat = "1.6.1"
 material = "1.12.0"
 activity = "1.9.0"
 constraintlayout = "2.1.4"
+playServicesMaps = "18.2.0"
+mapboxMaps = "11.4.1"
+mapboxSdkAnnotation = "0.8.0"
+mapboxNavigation = "2.20.0"
+mapboxNavigationcore = "3.0.2"
+mapboxComponents = "3.0.2"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -21,6 +27,13 @@ androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 androidx-activity = { group = "androidx.activity", name = "activity", version.ref = "activity" }
 androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
+play-services-maps = { group = "com.google.android.gms", name = "play-services-maps", version.ref = "playServicesMaps" }
+mapbox-maps = { group = "com.mapbox.maps", name = "android", version.ref = "mapboxMaps" }
+#mapbox-android-plugin-annotation = { group = "com.mapbox.mapboxsdk", name = "mapbox-android-plugin-annotation-v9", version.ref = "mapboxSdkAnnotation" }
+#mapbox-android-navigation = { group = "com.mapbox.navigation", name = "ui-dropin", version.ref = "mapboxNavigation" }
+#mapbox-android-navigationcore-navigation = { group = "com.mapbox.navigationcore", name = "navigation", version.ref = "mapboxNavigationcore" }
+#mapbox-android-ui-components = { group = "com.mapbox.navigationcore", name = "ui-components", version.ref = "mapboxComponents" }
+
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

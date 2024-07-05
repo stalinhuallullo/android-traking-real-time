@@ -10,9 +10,7 @@ import gob.pe.msi.trakingrealtime.presentation.feature.routes.register.RoutesAct
 import gob.pe.msi.trakingrealtime.utils.Tools
 
 class DashboardActivity : AppCompatActivity(), View.OnClickListener {
-    //lateinit var actionBar: ActionBar
     lateinit var lytRoutesAvailable: LinearLayout
-    //lateinit var intent: Intent
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -64,7 +62,7 @@ class DashboardActivity : AppCompatActivity(), View.OnClickListener {
             R.id.lytRoutesAvailable->{
                 //intent = Intent(this, RoutesActivity::class.java)
                 val intent = Intent(this, RoutesActivity::class.java)
-                //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
                 startActivity(intent)
             }
         }

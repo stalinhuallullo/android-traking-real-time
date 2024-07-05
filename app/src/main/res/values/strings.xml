@@ -1,9 +1,16 @@
-<resources>
-    <string name="app_name">TrakingRealTime</string>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="app_name" translatable="false">TrakingRealTime</string>
     <string name="email">Correo electrónico</string>
     <string name="password">Contraseña</string>
     <string name="forgot_password">¿Has olvidado tu contraseña?</string>
     <string name="login">Iniciar sesión</string>
     <string name="new_user">¿Nuevo usuario?</string>
     <string name="sign_up">Regístrate</string>
+
+    <string name="mapbox_access_token" translatable="false" tools:ignore="UnusedResources">pk.eyJ1Ijoic3RhbGluaHVhbGx1bGxvIiwiYSI6ImNsZzJwenU5azA3d2gzZHN0eTFxbW82ZjYifQ.ITwpZNfTokGn3Va86-1BGQ</string>
+    <string name="noTokenDialogTitle">Error: no mapbox access token</string>
+    <string name="noTokenDialogBody">Please put your mapbox access token to res/values/mapbox_access_token.xml</string>
+    <string name="title_camera_transitions">Use camera to frame the map</string>
+    <string name="description_camera_transitions">Use NavigationCamera to show various map camera transitions using live location and routing data.</string>
+
 </resources>
