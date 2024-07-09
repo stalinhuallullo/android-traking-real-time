@@ -49,7 +49,9 @@ dependencies {
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
     implementation(libs.androidx.activity)
+    // Constraint Layout
     implementation(libs.androidx.constraintlayout)
+
     implementation("com.vmadalin:easypermissions-ktx:1.0.0")
     implementation("de.hdodenhof:circleimageview:3.1.0")         // circle image view
     implementation("com.mikhaellopez:circularimageview:4.3.1")
@@ -84,17 +86,26 @@ dependencies {
     implementation("com.google.android.material:material:1.6.1")
     implementation("com.google.android.gms:play-services:7.0.0")
     implementation("com.google.android.gms:play-services-maps:18.0.2")
+    // Google Play Services Location
     implementation("com.google.android.gms:play-services-location:20.0.0")
-    implementation(libs.play.services.maps)
+    //implementation(libs.play.services.maps)
 
     // STYLE MAP BOX
-    implementation(libs.mapbox.maps)
-    /*implementation(libs.mapbox.android.plugin.annotation)
-
+    /*implementation(libs.mapbox.android.sdk)
+    implementation(libs.mapbox.android.sdk) {
+        exclude(group = "group_name", module = "module_name")
+    }
+    //implementation(libs.mapbox.android.navigation.ui.dropin)
+    implementation(libs.mapbox.android.navigation.ui)
     implementation(libs.mapbox.android.navigation)
-    implementation(libs.mapbox.android.navigationcore.navigation)
-    implementation(libs.mapbox.android.ui.components)*/
+    implementation(libs.mapbox.android.plugin.places.v9)*/
 
+
+    // Mapbox Navigation SDK
+    implementation("com.mapbox.navigationcore:navigation:3.0.2")
+    implementation("com.mapbox.navigationcore:ui-components:3.0.2")
+
+    // Testing libraries
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

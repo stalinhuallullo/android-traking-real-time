@@ -2,7 +2,7 @@
 agp = "8.4.0"
 javaxInject = "1"
 kotlin = "1.9.0"
-coreKtx = "1.13.1"
+coreKtx = "1.8.0"
 junit = "4.13.2"
 junitVersion = "1.1.5"
 espressoCore = "3.5.1"
@@ -17,6 +17,12 @@ mapboxNavigation = "2.20.0"
 mapboxNavigationcore = "3.0.2"
 mapboxComponents = "3.0.2"
 
+mapboxAndroidMaps = "9.5.0"
+mapboxAndroidNavigationUi = "0.42.6"
+mapboxAndroidNavigation = "0.42.6"
+mapboxAndroidPluginPlaceV9 = "0.12.0"
+
+
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 javax-inject = { module = "javax.inject:javax.inject", version.ref = "javaxInject" }
@@ -28,11 +34,18 @@ material = { group = "com.google.android.material", name = "material", version.r
 androidx-activity = { group = "androidx.activity", name = "activity", version.ref = "activity" }
 androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
 play-services-maps = { group = "com.google.android.gms", name = "play-services-maps", version.ref = "playServicesMaps" }
-mapbox-maps = { group = "com.mapbox.maps", name = "android", version.ref = "mapboxMaps" }
+#mapbox-maps = { group = "com.mapbox.maps", name = "android", version.ref = "mapboxMaps" }
 #mapbox-android-plugin-annotation = { group = "com.mapbox.mapboxsdk", name = "mapbox-android-plugin-annotation-v9", version.ref = "mapboxSdkAnnotation" }
 #mapbox-android-navigation = { group = "com.mapbox.navigation", name = "ui-dropin", version.ref = "mapboxNavigation" }
 #mapbox-android-navigationcore-navigation = { group = "com.mapbox.navigationcore", name = "navigation", version.ref = "mapboxNavigationcore" }
 #mapbox-android-ui-components = { group = "com.mapbox.navigationcore", name = "ui-components", version.ref = "mapboxComponents" }
+
+mapbox-android-sdk = { group = "com.mapbox.mapboxsdk", name = "mapbox-android-sdk", version.ref = "mapboxAndroidMaps" }
+mapbox-android-navigation-ui-dropin = { group = "com.mapbox.navigation", name = "ui-dropin", version.ref = "mapboxNavigation" }
+mapbox-android-navigation-ui = { group = "com.mapbox.mapboxsdk", name = "mapbox-android-navigation-ui", version.ref = "mapboxAndroidNavigationUi" }
+mapbox-android-navigation = { group = "com.mapbox.mapboxsdk", name = "mapbox-android-navigation", version.ref = "mapboxAndroidNavigation" }
+mapbox-android-plugin-places-v9 = { group = "com.mapbox.mapboxsdk", name = "mapbox-android-plugin-places-v9", version.ref = "mapboxAndroidPluginPlaceV9" }
+
 
 
 [plugins]
