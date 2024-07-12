@@ -4,6 +4,8 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import gob.pe.msi.trakingrealtime.data.net.RestApi
+import gob.pe.msi.trakingrealtime.data.net.service.IBusesService
+import gob.pe.msi.trakingrealtime.data.net.service.IRoutesService
 import gob.pe.msi.trakingrealtime.data.net.service.ITrackingService
 import gob.pe.msi.trakingrealtime.presentation.feature.traking.model.dto.GPSExpresoDto
 import gob.pe.msi.trakingrealtime.presentation.feature.traking.model.dto.GPSExpresoResponseDto
@@ -13,8 +15,8 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class TrackingService: ITrackingService {
-    private val apiService: ITrackingService = RestApi.retrofitInstance!!.create(
-        ITrackingService::class.java)
+
+    private var apiService: ITrackingService = RestApi.retrofitInstance!!.create(ITrackingService::class.java)
 
     override fun sendLocation(
         headers: Map<String, String>,

@@ -7,4 +7,5 @@ interface View {
      * Get a [Context].
      */
     fun context(): Context?
+
 }

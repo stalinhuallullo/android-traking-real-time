@@ -83,7 +83,7 @@ dependencies {
 
 
     // STYLE GOOGLE MAPS
-    implementation("com.google.android.material:material:1.6.1")
+    //implementation("com.google.android.material:material:1.6.1")
     implementation("com.google.android.gms:play-services:7.0.0")
     implementation("com.google.android.gms:play-services-maps:18.0.2")
     // Google Play Services Location
@@ -102,8 +102,9 @@ dependencies {
 
 
     // Mapbox Navigation SDK
-    implementation("com.mapbox.navigationcore:navigation:3.0.2")
-    implementation("com.mapbox.navigationcore:ui-components:3.0.2")
+    implementation("com.mapbox.maps:android:10.9.1")
+    implementation("com.mapbox.navigation:ui-dropin:2.9.2")
+    implementation("com.mapbox.navigation:android:2.9.2")
 
     // Testing libraries
     testImplementation(libs.junit)

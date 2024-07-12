@@ -3,6 +3,7 @@ package gob.pe.msi.trakingrealtime.utils
 object Constants {
     const val BASE_URL = "http://localhost:8085/"
     const val BASE_URL_REMOTO = "http://test.munisanisidro.gob.pe/"
+    const val BASE_URL_REMOTO_WEB_LOCAL = "https://5c98-200-123-25-199.ngrok-free.app/"
 
     const val ROUTE_RESPONSE_KEY: String = "ROUTE_RESPONSE_KEY"
     const val BUS_RESPONSE_KEY: String = "BUS_RESPONSE_KEY"

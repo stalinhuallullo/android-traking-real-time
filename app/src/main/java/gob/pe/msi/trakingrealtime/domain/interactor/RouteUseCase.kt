@@ -6,6 +6,7 @@ import gob.pe.msi.trakingrealtime.data.repository.BusRepository
 import gob.pe.msi.trakingrealtime.data.repository.RouteDataRepository
 import gob.pe.msi.trakingrealtime.data.repository.RouteRepository
 import gob.pe.msi.trakingrealtime.domain.entity.ResponseRoute
+import gob.pe.msi.trakingrealtime.domain.entity.RouteWhereabout
 import gob.pe.msi.trakingrealtime.domain.exception.ExpiredSessionException
 import gob.pe.msi.trakingrealtime.domain.executor.PostExecutionThread
 import gob.pe.msi.trakingrealtime.domain.executor.ThreadExecutor
@@ -36,5 +37,9 @@ class RouteUseCase
 
     fun getListBuses(code: String, observer: DisposableObserver<HttpResponseBus>) {
         execute(busRepository.getListBuses(code), observer)
+    }
+
+    fun getRouteWhereabout(codRoute: String, observer: DisposableObserver<RouteWhereabout>) {
+        execute(routeRepository.getRouteWhereabout(codRoute), observer)
     }
 }

@@ -7,6 +7,7 @@ import gob.pe.msi.trakingrealtime.data.entity.RouteListResponseEntity
 import gob.pe.msi.trakingrealtime.data.model.HttpResponse
 import gob.pe.msi.trakingrealtime.data.model.HttpResponseRoutes
 import gob.pe.msi.trakingrealtime.data.net.service.impl.RoutesService
+import gob.pe.msi.trakingrealtime.utils.Constants
 
 class RoutesViewModel : ViewModel() {
     private val routesService = RoutesService()
@@ -14,7 +15,7 @@ class RoutesViewModel : ViewModel() {
     val routesLiveData: LiveData<HttpResponseRoutes> = _routesLiveData
 
     fun fetchRoutes() {
-        routesService.listRoutes()
+        routesService.getListRoutes()
             .subscribe({ response ->
                 _routesLiveData.value = response
             }, { error ->

@@ -31,6 +31,20 @@ import java.util.Locale
 import kotlin.math.min
 
 object Tools {
+    fun rgbToHex(rgbString: String): String {
+        // Extraer los valores de RGB de la cadena
+        val regex = """rgb\((\d+),\s*(\d+),\s*(\d+)\)""".toRegex()
+        val matchResult = regex.find(rgbString)
+
+        if (matchResult != null) {
+            val (red, green, blue) = matchResult.destructured
+            // Convertir los valores a hexadecimal
+            return String.format("#%02X%02X%02X", red.toInt(), green.toInt(), blue.toInt())
+        } else {
+            throw IllegalArgumentException("Formato de cadena RGB no válido")
+        }
+    }
+
     fun setSystemBarColor(act: Activity) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             val window = act.window

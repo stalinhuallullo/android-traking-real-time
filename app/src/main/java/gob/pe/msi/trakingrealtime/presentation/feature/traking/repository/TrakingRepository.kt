@@ -7,13 +7,15 @@ import gob.pe.msi.trakingrealtime.presentation.feature.traking.model.dto.GPSExpr
 import gob.pe.msi.trakingrealtime.presentation.feature.traking.model.dto.GPSExpresoResponseDto
 import gob.pe.msi.trakingrealtime.presentation.feature.traking.model.dto.LocationDto
 import gob.pe.msi.trakingrealtime.data.net.RestApi
+import gob.pe.msi.trakingrealtime.data.net.service.IBusesService
 import gob.pe.msi.trakingrealtime.data.net.service.ITrackingService
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 class TrakingRepository {
-    private val apiService: ITrackingService = RestApi.retrofitInstance!!.create(ITrackingService::class.java)
+
+    private var apiService: ITrackingService = RestApi.retrofitInstance!!.create(ITrackingService::class.java)
 
 
     fun saveLocation (headers: Map<String, String>, location: LocationDto): LiveData<GPSExpresoResponseDto> {

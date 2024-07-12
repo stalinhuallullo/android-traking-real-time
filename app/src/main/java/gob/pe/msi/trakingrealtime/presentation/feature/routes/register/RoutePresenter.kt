@@ -2,7 +2,6 @@ package gob.pe.msi.trakingrealtime.presentation.feature.routes.register
 
 import gob.pe.msi.trakingrealtime.data.model.HttpResponseBus
 import gob.pe.msi.trakingrealtime.data.model.HttpResponseRoutes
-import gob.pe.msi.trakingrealtime.domain.entity.ResponseRoute
 import gob.pe.msi.trakingrealtime.domain.interactor.BaseObserver
 import gob.pe.msi.trakingrealtime.domain.interactor.RouteUseCase
 

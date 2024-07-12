@@ -6,12 +6,12 @@
     android:id="@+id/nested_content"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/bg_fondo"
     tools:context=".presentation.feature.routes.register.RoutesActivity">
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#F3F4F8"
         android:clipToPadding="false"
         android:fillViewport="true"
         android:scrollbars="none"

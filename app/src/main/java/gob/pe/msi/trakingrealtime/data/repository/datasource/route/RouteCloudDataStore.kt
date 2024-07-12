@@ -6,6 +6,6 @@ import io.reactivex.rxjava3.core.Observable
 
 class RouteCloudDataStore (private val service: IRoutesService) : RouteDataStore {
     override fun getListRoutes(): Observable<HttpResponseRoutes> {
-        return service.listRoutes()
+        return service.getListRoutes()
     }
 }

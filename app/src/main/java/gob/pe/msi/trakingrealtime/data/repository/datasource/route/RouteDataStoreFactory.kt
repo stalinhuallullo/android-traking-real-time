@@ -17,7 +17,7 @@ class RouteDataStoreFactory {
      */
     fun createCloud(): RouteDataStore {
         println("createCloud =========  ${Constants.BASE_URL_REMOTO}")
-        val service: IRoutesService = RoutesService(Constants.BASE_URL_REMOTO)
+        val service: IRoutesService = RoutesService()
         return RouteCloudDataStore(service)
     }
 }

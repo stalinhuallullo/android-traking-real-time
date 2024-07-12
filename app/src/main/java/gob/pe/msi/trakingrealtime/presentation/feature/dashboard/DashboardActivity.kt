@@ -64,6 +64,7 @@ class DashboardActivity : AppCompatActivity(), View.OnClickListener {
                 val intent = Intent(this, RoutesActivity::class.java)
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
                 startActivity(intent)
+                finish()
             }
         }
     }

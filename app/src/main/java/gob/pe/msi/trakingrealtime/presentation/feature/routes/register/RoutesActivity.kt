@@ -33,12 +33,11 @@ import gob.pe.msi.trakingrealtime.domain.executor.UIThread
 import gob.pe.msi.trakingrealtime.domain.interactor.RouteUseCase
 import gob.pe.msi.trakingrealtime.presentation.common.utils.OnSingleClickListener
 import gob.pe.msi.trakingrealtime.presentation.common.widget.CustomItemBig
-import gob.pe.msi.trakingrealtime.presentation.feature.navegation.NavegationActivity
+import gob.pe.msi.trakingrealtime.presentation.feature.navegation.navigationDetails.NavegationActivity
 import gob.pe.msi.trakingrealtime.presentation.feature.routes.buses.BusesListActivity
 import gob.pe.msi.trakingrealtime.presentation.feature.routes.buses.model.Bus
 import gob.pe.msi.trakingrealtime.presentation.feature.routes.routerList.RoutesListActivity
 import gob.pe.msi.trakingrealtime.presentation.feature.routes.routerList.model.Route
-import gob.pe.msi.trakingrealtime.presentation.feature.traking.TrackingActivity
 import gob.pe.msi.trakingrealtime.utils.Constants
 import gob.pe.msi.trakingrealtime.utils.Tools
 

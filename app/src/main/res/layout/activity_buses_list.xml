@@ -1,114 +1,114 @@
 <?xml version="1.0" encoding="utf-8"?>
-    <RelativeLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/main"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_fondo"
+    tools:context=".presentation.feature.routes.buses.BusesListActivity">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appbar_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#F3F4F8"
-        tools:context=".presentation.feature.routes.buses.BusesListActivity">
+        android:layout_height="?android:attr/actionBarSize"
+        app:elevation="0dp"
+        android:translationZ="0.1dp"
+        android:theme="@style/AppTheme.AppBarOverlay">
+        <include layout="@layout/toolbar_simple" />
+    </com.google.android.material.appbar.AppBarLayout>
 
-        <com.google.android.material.appbar.AppBarLayout
-            android:id="@+id/appbar_layout"
-            android:layout_width="match_parent"
-            android:layout_height="?android:attr/actionBarSize"
-            app:elevation="0dp"
-            android:translationZ="0.1dp"
-            android:theme="@style/AppTheme.AppBarOverlay">
-            <include layout="@layout/toolbar_simple" />
-        </com.google.android.material.appbar.AppBarLayout>
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/nsvRoutes"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_above="@+id/clController"
+        android:layout_below="@id/appbar_layout"
+        android:clipToPadding="false"
+        android:fillViewport="true"
+        android:scrollbars="none"
+        android:scrollingCache="true">
 
-        <androidx.core.widget.NestedScrollView
-            android:id="@+id/nsvRoutes"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_above="@+id/clController"
-            android:layout_below="@id/appbar_layout"
-            android:clipToPadding="false"
-            android:fillViewport="true"
-            android:scrollbars="none"
-            android:scrollingCache="true">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/tvSuggestedPharmacies"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/spacing_mlarge"
-                    android:layout_marginEnd="@dimen/spacing_mlarge"
-                    android:layout_marginTop="@dimen/spacing_mlarge"
-                    android:layout_marginBottom="@dimen/spacing_large"
-                    android:text="Buses sugeridos"
-                    android:textColor="@color/subtitle_label"
-                    android:textSize="16sp" />
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recyclerView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-
-            </LinearLayout>
-
-        </androidx.core.widget.NestedScrollView>
-
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/clController"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/shape_popup_window"
-            android:padding="20dp"
-            android:layout_alignParentBottom="true">
-
-            <LinearLayout
-                android:id="@+id/rlAlert"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:padding="15dp"
-                android:background="@drawable/shape_alpha_blue_corner"
-                tools:ignore="MissingConstraints">
-
-                <ImageView
-                    android:id="@+id/imgViewCheck"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:layout_gravity="center_vertical"
-                    android:src="@drawable/ic_alert_ligth_blue" />
-
-                <TextView
-                    android:id="@+id/tvInfoMessage"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_marginStart="8dp"
-                    android:text="Te mostramos solo los buses que estan disponibles actualmente."
-                    android:textColor="#888888"
-                    android:textSize="14sp"/>
-
-            </LinearLayout>
+            android:orientation="vertical">
 
             <TextView
-                android:id="@+id/btnSave"
+                android:id="@+id/tvSuggestedPharmacies"
                 android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:layout_marginTop="15dp"
-                android:background="@drawable/selector_button_corner_green"
-                android:enabled="false"
-                android:gravity="center"
-                android:clickable="true"
-                android:text="Guardar"
-                android:textAllCaps="false"
-                android:textColor="@color/white"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/rlAlert" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/spacing_mlarge"
+                android:layout_marginEnd="@dimen/spacing_mlarge"
+                android:layout_marginTop="@dimen/spacing_mlarge"
+                android:layout_marginBottom="@dimen/spacing_large"
+                android:text="Buses sugeridos"
+                android:textColor="@color/subtitle_label"
+                android:textSize="16sp" />
 
-    </RelativeLayout>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/clController"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/shape_popup_window"
+        android:padding="20dp"
+        android:layout_alignParentBottom="true">
+
+        <LinearLayout
+            android:id="@+id/rlAlert"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="15dp"
+            android:background="@drawable/shape_alpha_blue_corner"
+            tools:ignore="MissingConstraints">
+
+            <ImageView
+                android:id="@+id/imgViewCheck"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/ic_alert_ligth_blue" />
+
+            <TextView
+                android:id="@+id/tvInfoMessage"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginStart="8dp"
+                android:text="Te mostramos solo los buses que estan disponibles actualmente."
+                android:textColor="#888888"
+                android:textSize="14sp"/>
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/btnSave"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/selector_button_corner_green"
+            android:enabled="false"
+            android:gravity="center"
+            android:clickable="true"
+            android:text="Guardar"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/rlAlert" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</RelativeLayout>

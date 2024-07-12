@@ -15,6 +15,7 @@ class BusesService (): IBusesService {
 
     private var apiService: IBusesService = RestApi.retrofitInstance!!.create(IBusesService::class.java)
 
+
     override fun listBuses(code: String): Observable<HttpResponseBus> {
         return Observable.create(ObservableOnSubscribe {emitter: ObservableEmitter<HttpResponseBus> ->
             apiService.listBuses(code)

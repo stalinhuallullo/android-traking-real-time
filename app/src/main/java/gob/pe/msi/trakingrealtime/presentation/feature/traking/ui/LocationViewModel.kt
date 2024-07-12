@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import gob.pe.msi.trakingrealtime.presentation.feature.traking.model.dto.GPSExpresoResponseDto
 import gob.pe.msi.trakingrealtime.presentation.feature.traking.model.dto.LocationDto
 import gob.pe.msi.trakingrealtime.presentation.feature.traking.repository.TrakingRepository
+import gob.pe.msi.trakingrealtime.utils.Constants
 
 
 class LocationViewModel : ViewModel() {
